@@ -1,0 +1,15 @@
+@media (max-width:500px) {
+    #sidebar-container {
+        display:none
+    }
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.table-responsive {
+    position: static !important;
+}

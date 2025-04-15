@@ -1,0 +1,1 @@
+<img src="/img/lotoateliepng.png" alt="Ateliê do Noivo" width="50" height="50">
