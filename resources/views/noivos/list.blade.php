@@ -1,92 +1,99 @@
 <x-app-layout>
-    <div class="container py-6">
-        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-            <h1 class="fw-bold fs-3 text-dark-emphasis m-0">📋 Noivos</h1>
+    <div class="container py-6 mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Noivos</h1>
             <a href="{{ route('noivos.cadastrar') }}"
-                class="btn btn-outline-dark d-flex align-items-center gap-2 shadow-sm rounded-pill px-4 py-2">
-                <i class="bi bi-plus-lg"></i> <span>Adicionar Noivo</span>
+                class="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 flex items-center gap-2">
+                <i class="bi bi-plus-lg"></i> Adicionar Noivo
             </a>
         </div>
 
-        <div class="mb-4 position-relative">
-            <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"></i>
-            <input type="text" id="myInputTextField"
-                class="form-control ps-5 border-0 border-bottom border-secondary-subtle rounded-0 shadow-none bg-transparent"
-                placeholder="Digite para buscar..." style="font-size: 0.95rem;">
-        </div>
 
-        <div class="table-responsive shadow rounded-4 border border-light-subtle"
-            style="overflow-x: auto;">
-            <table id="noivosTable" class="table align-middle mb-0">
-                <thead class="bg-light text-secondary text-uppercase small">
-                    <tr>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
-                        <th><i class="bi bi-calendar3"></i> Evento</th>
-                        <th><i class="bi bi-people"></i> Padrinhos</th>
-                        <th>Status</th>
-                        <th></th>
+        <div class="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
+            <div class="relative mb-4">
+                <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"></i>
+                <input type="text" id="searchInput" placeholder="Pesquisar noivo..."
+                    class="form-control ps-5 border-0 border-bottom border-secondary-subtle rounded-0 shadow-none bg-transparent"
+                    style="font-size: 0.95rem;">
+            </div>
+
+            <table id="noivosTable" class="min-w-full text-sm text-gray-700">
+                <thead class="border-b">
+                    <tr class="text-gray-600">
+                        <th class="py-3 px-4 text-start">Nome</th>
+                        <th class="py-3 px-4 text-start">Telefone</th>
+                        <th class="py-3 px-4 text-start">Email</th>
+                        <th class="py-3 px-4 text-start">Evento</th>
+                        <th class="py-3 px-4 text-center">Padrinhos</th>
+                        <th class="py-3 px-4 text-start">Status</th>
+                        <th class="py-3 px-4 text-center">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="table-group-divider">
+                <tbody>
                     @foreach ($noivos as $noivo)
-                        <tr>
-                            <td class="fw-semibold">{{ $noivo->nome }}</td>
-                            <td>{{ $noivo->telefone }}</td>
-                            <td>{{ $noivo->email }}</td>
-                            <td>{{ $noivo->datadoevento->format('d/m/Y') }}</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-2 flex-wrap">
-                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border text-secondary"
-                                        style="width: 28px; height: 28px; font-size: 0.85rem;">
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4 font-semibold">{{ $noivo->nome }}</td>
+                            <td class="py-3 px-4">{{ $noivo->telefone }}</td>
+                            <td class="py-3 px-4">{{ $noivo->email }}</td>
+                            <td class="py-3 px-4">{{ $noivo->datadoevento->format('d/m/Y') }}</td>
+                            <td class="py-3 px-4 text-center">
+                                <div class="flex justify-center items-center gap-2">
+                                    <span
+                                        class="inline-flex items-center justify-center w-6 h-6 border rounded-full text-xs text-gray-700">
                                         {{ $noivo->padrinhos_count }}
                                     </span>
                                     <a href="{{ route('padrinhos.list', ['noivo' => $noivo->id]) }}"
-                                        class="text-primary text-decoration-none" style="font-size: 0.9rem;">
-                                        Ver todos
-                                    </a>
+                                        class="text-blue-600 text-xs hover:underline">Ver todos</a>
                                 </div>
                             </td>
-                            <td>
+                            <td class="py-3 px-4">
                                 @php $status = strtolower($noivo->status ?? 'ativo'); @endphp
                                 @if ($status === 'ativo')
-                                    <span class="badge bg-dark-subtle text-dark-emphasis px-3 rounded-pill">Ativo</span>
+                                    <span class="px-2 py-1 text-xs rounded-full bg-gray-200 text-gray-800">Ativo</span>
                                 @elseif ($status === 'concluido')
-                                    <span class="badge bg-success-subtle text-success-emphasis px-3 rounded-pill">Concluído</span>
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full bg-green-200 text-green-800">Concluído</span>
                                 @elseif ($status === 'cancelado')
-                                    <span class="badge bg-danger-subtle text-danger-emphasis px-3 rounded-pill">Cancelado</span>
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full bg-red-200 text-red-800">Cancelado</span>
                                 @else
-                                    <span class="badge bg-secondary-subtle text-secondary-emphasis px-3 rounded-pill">{{ ucfirst($status) }}</span>
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full bg-gray-300 text-gray-700">{{ ucfirst($status) }}</span>
                                 @endif
                             </td>
-                            <td class="text-end">
-                                <div class="dropdown">
-                                    <button class="btn btn-light btn-sm rounded-circle" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-three-dots-vertical"></i>
+                            <td class="py-3 px-4 text-center">
+                                <div class="relative inline-block text-left">
+                                    <button type="button" class="text-gray-600 hover:text-black"
+                                        data-bs-toggle="dropdown">
+                                        &#8942;
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm py-2 px-1 rounded-3">
-                                        <li class="px-3 py-1 fw-bold text-dark" style="font-size: 0.95rem;">Ações</li>
-                                        <li><a href="{{ route('noivos.show', $noivo->id) }}"
-                                                class="dropdown-item px-3">Ver detalhes</a></li>
-                                        <li><a href="{{ route('noivos.editar', $noivo->id) }}"
-                                                class="dropdown-item px-3">Editar</a></li>
-                                        <li><a href="{{ route('padrinhos.list', ['noivo' => $noivo->id]) }}"
-                                                class="dropdown-item px-3">Adicionar padrinho</a></li>
+                                    <ul class="dropdown-menu dropdown-menu-end text-sm shadow-sm rounded-md mt-2">
+                                        <li><a class="dropdown-item" href="{{ route('noivos.show', $noivo->id) }}">Ver
+                                                detalhes</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="{{ route('noivos.editar', $noivo->id) }}">Editar</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="{{ route('padrinhos.list', ['noivo' => $noivo->id]) }}">Adicionar
+                                                padrinho</a></li>
                                         <li>
-                                            <hr class="dropdown-divider my-1">
+                                            <hr class="dropdown-divider">
                                         </li>
                                         <li>
-                                            <form action="{{ route('noivos.status', ['noivo' => $noivo->id, 'status' => 'concluido']) }}" method="POST">
+                                            <form
+                                                action="{{ route('noivos.status', ['noivo' => $noivo->id, 'status' => 'concluido']) }}"
+                                                method="POST">
                                                 @csrf
-                                                <button type="submit" class="dropdown-item text-success px-3">Marcar como concluído</button>
+                                                <button type="submit" class="dropdown-item text-green-600">Marcar como
+                                                    concluído</button>
                                             </form>
                                         </li>
                                         <li>
-                                            <form action="{{ route('noivos.status', ['noivo' => $noivo->id, 'status' => 'cancelado']) }}" method="POST">
+                                            <form
+                                                action="{{ route('noivos.status', ['noivo' => $noivo->id, 'status' => 'cancelado']) }}"
+                                                method="POST">
                                                 @csrf
-                                                <button type="submit" class="dropdown-item text-danger px-3">Cancelar evento</button>
+                                                <button type="submit" class="dropdown-item text-red-600">Cancelar
+                                                    evento</button>
                                             </form>
                                         </li>
                                     </ul>
@@ -98,72 +105,28 @@
             </table>
 
             @if ($noivos->isEmpty())
-                <div class="text-center text-muted py-4">Nenhum noivo encontrado.</div>
+                <div class="text-center text-gray-400 py-4">Nenhum noivo encontrado.</div>
             @endif
         </div>
 
-        <div class="d-flex justify-content-end mt-4">
+        <div class="flex justify-end mt-6">
             {{ $noivos->links() }}
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#noivosTable').DataTable({
-                paging: false,
-                info: false,
-                searching: true,
-                language: {
-                    search: "",
-                    searchPlaceholder: "Pesquisar noivos..."
-                },
-                responsive: true
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.getElementById('noivosTable').getElementsByTagName('tbody')[0];
+            const rows = table.getElementsByTagName('tr');
 
-            $('#myInputTextField').on('keyup', function() {
-                $('#noivosTable').DataTable().search(this.value).draw();
+            searchInput.addEventListener('input', function() {
+                const value = searchInput.value.toLowerCase();
+                for (let i = 0; i < rows.length; i++) {
+                    const nomeNoivo = rows[i].querySelector('td').innerText.toLowerCase();
+                    rows[i].style.display = nomeNoivo.includes(value) ? '' : 'none';
+                }
             });
         });
     </script>
-
-    <style>
-        .dropdown-menu {
-            min-width: 180px;
-            font-size: 0.92rem;
-            border-radius: 0.75rem;
-            border: 1px solid #e2e6ea;
-        }
-
-        .dropdown-item {
-            padding-top: 6px;
-            padding-bottom: 6px;
-            border-radius: 0.375rem;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f8f9fa;
-        }
-
-        .dropdown-divider {
-            border-top: 1px solid #e9ecef;
-        }
-
-        @media (max-width: 576px) {
-            th, td {
-                white-space: nowrap;
-            }
-
-            .table-responsive {
-                border: none;
-            }
-
-            .btn {
-                font-size: 0.875rem;
-            }
-
-            .fs-3 {
-                font-size: 1.25rem !important;
-            }
-        }
-    </style>
 </x-app-layout>

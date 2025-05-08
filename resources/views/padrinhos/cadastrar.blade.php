@@ -97,20 +97,20 @@
                         </div>
 
                         <div>
-                            <label for="data_locacao" class="block mb-1 font-medium">Data de Locação</label>
-                            <input type="date" name="data_locacao" id="data_locacao"
-                                value="{{ old('data_locacao') }}" class="w-full border rounded-lg px-3 py-2">
+                            <label for="datadalocacao" class="block mb-1 font-medium">Data de Locação</label>
+                            <input type="date" name="datadalocacao" id="datadalocacao"
+                                value="{{ old('datadalocacao') }}" class="w-full border rounded-lg px-3 py-2">
                         </div>
 
                         <div>
-                            <label for="data_retirada" class="block mb-1 font-medium">Data de Retirada</label>
-                            <input type="date" name="data_retirada" id="data_retirada"
-                                value="{{ old('data_retirada') }}" class="w-full border rounded-lg px-3 py-2">
+                            <label for="datadaretirada" class="block mb-1 font-medium">Data de Retirada</label>
+                            <input type="date" name="datadaretirada" id="datadaretirada"
+                                value="{{ old('datadaretirada') }}" class="w-full border rounded-lg px-3 py-2">
                         </div>
                         <div class="md:col-span-2">
-                            <label for="observacoes_evento" class="block text-sm font-medium text-gray-700">Observações
+                            <label for="observacoesevento" class="block text-sm font-medium text-gray-700">Observações
                                 do Evento</label>
-                            <textarea name="observacoes_evento" id="observacoes_evento" rows="3"
+                            <textarea name="observacoesevento" id="observacoesevento" rows="3"
                                 class="mt-1 w-full rounded-md border-gray-300 shadow-sm" placeholder="Observações adicionais sobre o evento"></textarea>
                         </div>
                     </div>
@@ -168,14 +168,14 @@
 
 
                     <div>
-                        <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo</label>
-                        <input type="text" name="modelo" id="modelo"
+                        <label for="modelo_terno" class="block text-sm font-medium text-gray-700">Modelo</label>
+                        <input type="text" name="modelo_terno" id="modelo_terno"
                             class="mt-1 w-full rounded-md border-gray-300 shadow-sm" placeholder="Modelo do terno">
                     </div>
 
                     <div>
-                        <label for="cor" class="block text-sm font-medium text-gray-700">Cor</label>
-                        <input type="text" name="cor" id="cor"
+                        <label for="cor_terno" class="block text-sm font-medium text-gray-700">Cor</label>
+                        <input type="text" name="cor_terno" id="cor_terno"
                             class="mt-1 w-full rounded-md border-gray-300 shadow-sm" placeholder="Cor do terno">
                     </div>
 

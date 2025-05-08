@@ -28,9 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/noivos/adicionar', [NoivosController::class, 'cadastrar'])->name('noivos.cadastrar');
     Route::get('/noivos/{id}/editar', [NoivosController::class, 'editar'])->name('noivos.editar');
     Route::post('/noivos', [NoivosController::class, 'store'])->name('noivos.store');
-    Route::put('/noivo/{id}', [NoivosController::class, 'atualizar'])->name('noivos.atualizar');
+    Route::put('/noivo/{id}', [NoivosController::class, 'atualizar'])->name('noivo.atualizar');
     Route::delete('/noivos/{id}', [NoivosController::class, 'destroy'])->name('noivos.destroy');
     Route::post('/noivos/status', [NoivosController::class, 'status'])->name('noivos.status');
+    Route::get('/pedidos/obter-informacoes-noivo/{id}', [PedidosController::class, 'obterInformacoesNoivo']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -53,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/pedidos/{id}/update-status', [PedidosController::class, 'updateStatus'])->name('pedidos.updateStatus');
     Route::get('/pedidos/{id}/pdf', [PedidosController::class, 'gerarPdf'])->name('pedidos.pdf');
     Route::get('/noivos/buscar', [PedidosController::class, 'buscarNoivos'])->name('noivos.buscar');
+    Route::get('/pedidos/{id}', [PedidosController::class, 'show'])->name('pedidos.show');
+
 });
 
 require __DIR__ . '/auth.php';

@@ -22,7 +22,7 @@ class NoivosController extends Controller
 
     public function show($id)
     {
-        $noivo = Noivo::with(['evento', 'pedido.medidas', 'padrinhos'])->findOrFail($id);
+        $noivo = Noivo::with(['evento', 'padrinhos'])->findOrFail($id);
 
         $noivo->padrinhos_ativos = $noivo->padrinhos->where('status', 'ativo')->count();
         $noivo->padrinhos_inativos = $noivo->padrinhos->where('status', 'inativo')->count();
@@ -38,13 +38,15 @@ class NoivosController extends Controller
             'telefone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'status' => 'required|string',
-    
+            'observacoesnoivo' => 'nullable|string',
+
             // Informações do Evento
             'datadoevento' => 'required|date',
             'datadalocacao' => 'required|date',
             'datadasegundaprova' => 'required|date',
             'datadaretirada' => 'required|date',
-    
+            'observacoesevento' => 'nullable|string',
+
             // Medidas do Terno
             'paleto' => 'required|string|max:255',
             'calca' => 'required|string|max:255',
@@ -54,41 +56,49 @@ class NoivosController extends Controller
             'barra_calca' => 'required|string|max:255',
             'modelo' => 'required|string|max:255',
             'cor' => 'required|string|max:255',
+            'observacoesmedidas' => 'nullable|string',
         ]);
-    
+
         // Salvar o noivo com os dados validados
         Noivo::create($validatedData);
-    
+
         return redirect()->route('noivos.list')->with('success', 'Noivo cadastrado com sucesso!');
     }
-    
-    
+
+    public function editar($id)
+    {
+        $noivo = Noivo::findOrFail($id);
+        return view('noivos.editar', compact('noivo'));
+    }
+
+
 
     public function atualizar(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
-            'email' => 'required|email|unique:noivos,email,' . $id,
-            'telefone' => 'nullable|string|max:15',
-            'padrinho' => 'nullable|string|max:255',
-            'datadoevento' => 'nullable|date',
-            'status' => 'nullable|string|max:50',
+            'telefone' => 'nullable|string|max:20',
+            'email' => 'nullable|email',
             'endereco' => 'nullable|string|max:255',
-            'observacoesnoivo' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:50',
+            'observacoesnoivo' => 'nullable|string',
+    
+            'datadoevento' => 'nullable|date',
             'localevento' => 'nullable|string|max:255',
             'datadalocacao' => 'nullable|date',
             'datadasegundaprova' => 'nullable|date',
             'datadaretirada' => 'nullable|date',
-            'observacoesevento' => 'nullable|string|max:255',
-            'observacoesmedidas' => 'nullable|string|max:255',
-            'paleto' => 'nullable|string|max:255',
-            'calca' => 'nullable|string|max:255',
-            'camisa' => 'nullable|string|max:255',
-            'colete' => 'nullable|string|max:255',
-            'manga' => 'nullable|string|max:255',
-            'barra_calca' => 'nullable|string|max:255',
-            'modelo' => 'nullable|string|max:255',
-            'cor' => 'nullable|string|max:255',
+            'observacoesevento' => 'nullable|string',
+    
+            'paleto' => 'nullable|string',
+            'calca' => 'nullable|string',
+            'camisa' => 'nullable|string',
+            'colete' => 'nullable|string',
+            'manga' => 'nullable|string',
+            'barra_calca' => 'nullable|string',
+            'modelo' => 'nullable|string',
+            'cor' => 'nullable|string',
+            'observacoesmedidas' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {

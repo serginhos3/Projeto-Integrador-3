@@ -18,11 +18,13 @@ return new class extends Migration
             $table->string('telefone')->nullable();
             $table->string('email')->unique();
             $table->string('status')->nullable();
+            $table->text('observacoes')->nullable();
 
             // Informações do evento
             $table->date('datadoevento')->nullable();
-            $table->date('datadelocacao')->nullable();
-            $table->date('dataderetirada')->nullable();
+            $table->date('datadalocacao')->nullable();
+            $table->date('datadaretirada')->nullable();
+            $table->text('observacoesevento')->nullable();
 
             // Medidas do terno
             $table->string('paleto')->nullable();
@@ -33,7 +35,8 @@ return new class extends Migration
             $table->string('barra_calca')->nullable();
             $table->string('modelo_terno')->nullable();
             $table->string('cor_terno')->nullable();
-            $table->text('observacoes')->nullable();
+            $table->text('observacoes_medidas')->nullable();
+
 
             $table->timestamps();
 
@@ -45,6 +48,26 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('padrinhos');
+        Schema::table('padrinhos', function (Blueprint $table) {
+            $table->dropColumn([
+                'status',
+                'observacoes',
+                'noivo_id',
+                'datadalocacao',
+                'datadaretirada',
+                'observacoesevento',
+                'paleto',
+                'calca',
+                'camisa',
+                'colete',
+                'manga',
+                'barra_calca',
+                'modelo_terno',
+                'cor_terno',
+                'observacoes_medidas'
+            ]);
+
+            $table->dropForeign(['noivo_id']);
+        });
     }
 };

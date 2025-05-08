@@ -22,6 +22,15 @@ class PadrinhosController extends Controller
         return view('padrinhos.cadastrar', compact('noivos'));
     }
 
+    public function show($id)
+    {
+        // Buscar o padrinho pelo ID
+        $padrinho = Padrinho::findOrFail($id); // Isso busca ou retorna erro 404 se não encontrar
+
+        // Passar o padrinho para a view show.blade.php
+        return view('padrinhos.show', compact('padrinho'));
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -30,8 +39,11 @@ class PadrinhosController extends Controller
             'telefone' => 'nullable|string|max:20',
             'email' => 'required|email|unique:padrinhos,email',
             'status' => 'nullable|string|max:50',
-            'datadelocacao' => 'nullable|date',
-            'dataderetirada' => 'nullable|date',
+            'observacoes' => 'nullable|string',
+            'datadalocacao' => 'nullable|date',
+            'datadaretirada' => 'nullable|date',
+            'observacoesevento' => 'nullable|string',
+
             'paleto' => 'nullable|string|max:255',
             'calca' => 'nullable|string|max:255',
             'camisa' => 'nullable|string|max:255',
@@ -40,7 +52,7 @@ class PadrinhosController extends Controller
             'barra_calca' => 'nullable|string|max:255',
             'modelo_terno' => 'nullable|string|max:255',
             'cor_terno' => 'nullable|string|max:255',
-            'observacoes' => 'nullable|string',
+            'observacoes_medidas' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -65,14 +77,17 @@ class PadrinhosController extends Controller
 
     public function atualizar(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'noivo_id' => 'required|exists:noivos,id',
+        $request->validate([
             'nome' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
             'telefone' => 'nullable|string|max:20',
-            'email' => 'required|email|unique:padrinhos,email,' . $id,
             'status' => 'nullable|string|max:50',
-            'datadelocacao' => 'nullable|date',
-            'dataderetirada' => 'nullable|date',
+            'observacoes' => 'nullable|string',
+            'noivo_id' => 'required|exists:noivos,id',
+            'datadalocacao' => 'nullable|date',
+            'datadaretirada' => 'nullable|date',
+            'observacoesevento' => 'nullable|string',
+
             'paleto' => 'nullable|string|max:255',
             'calca' => 'nullable|string|max:255',
             'camisa' => 'nullable|string|max:255',
@@ -81,58 +96,34 @@ class PadrinhosController extends Controller
             'barra_calca' => 'nullable|string|max:255',
             'modelo_terno' => 'nullable|string|max:255',
             'cor_terno' => 'nullable|string|max:255',
-            'observacoes' => 'nullable|string',
+            'observacoes_medidas' => 'nullable|string',
         ]);
 
-        // STORE
-        $padrinho = new Padrinho();
-        $padrinho->paleto = $request->paleto;
-        $padrinho->calca = $request->calca;
-        $padrinho->camisa = $request->camisa;
-        $padrinho->colete = $request->colete;
-        $padrinho->manga = $request->manga;
-        $padrinho->barra_calca = $request->barra_calca;
-        $padrinho->modelo_terno = $request->modelo_terno;
-        $padrinho->cor_terno = $request->cor_terno;
-        // Outros campos
-        $padrinho->nome = $request->nome;
-        $padrinho->email = $request->email;
-        $padrinho->telefone = $request->telefone;
-        $padrinho->status = $request->status;
-        $padrinho->noivo_id = $request->noivo_id;
-        $padrinho->datadoevento = $request->datadoevento;
-        $padrinho->save();
-
-        // UPDATE
         $padrinho = Padrinho::findOrFail($id);
-        $padrinho->paleto = $request->paleto;
-        $padrinho->calca = $request->calca;
-        $padrinho->camisa = $request->camisa;
-        $padrinho->colete = $request->colete;
-        $padrinho->manga = $request->manga;
-        $padrinho->barra_calca = $request->barra_calca;
-        $padrinho->modelo_terno = $request->modelo_terno;
-        $padrinho->cor_terno = $request->cor_terno;
-        // Outros campos
-        $padrinho->nome = $request->nome;
-        $padrinho->email = $request->email;
-        $padrinho->telefone = $request->telefone;
-        $padrinho->status = $request->status;
-        $padrinho->noivo_id = $request->noivo_id;
-        $padrinho->datadoevento = $request->datadoevento;
-        $padrinho->save();
 
-        if ($validator->fails()) {
-            return redirect()->route('padrinhos.editar', $id)
-                ->withErrors($validator)
-                ->withInput();
-        }
+        $padrinho->update([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'status' => $request->status,
+            'observacoes' => $request->observacoes,
+            'noivo_id' => $request->noivo_id,
+            'datadalocacao' => $request->datadalocacao,
+            'datadaretirada' => $request->datadaretirada,
+            'observacoesevento' => $request->observacoes_evento,
 
-        $padrinho = Padrinho::findOrFail($id);
-        $padrinho->fill($request->except(['_token']));
-        $padrinho->save();
+            'paleto' => $request->paleto,
+            'calca' => $request->calca,
+            'camisa' => $request->camisa,
+            'colete' => $request->colete,
+            'manga' => $request->manga,
+            'barra_calca' => $request->barra_calca,
+            'modelo_terno' => $request->modelo,
+            'cor_terno' => $request->cor,
+            'observacoes_medidas' => $request->observacoes_medidas,
+        ]);
 
-        return redirect()->route('padrinhos.list')->with('status', 'Padrinho atualizado com sucesso!');
+        return redirect()->route('padrinhos.list')->with('success', 'Padrinho atualizado com sucesso!');
     }
 
     public function destroy($id)

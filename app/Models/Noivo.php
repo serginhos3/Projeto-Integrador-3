@@ -9,13 +9,30 @@ class Noivo extends Model
     protected $table = 'noivos';
 
     protected $fillable = [
-        'nome', 'telefone', 'email', 'endereco', 'status', 'observacoesnoivo',
-        'datadoevento', 'localevento', 'datadalocacao', 'datadasegundaprova',
-        'datadaretirada', 'observacoesevento', 'paleto', 'calca', 'camisa', 'colete',
-        'manga', 'barra_calca', 'modelo', 'cor', 'observacoesmedidas',
+        'nome',
+        'telefone',
+        'email',
+        'endereco',
+        'status',
+        'observacoesnoivo',
+        'datadoevento',
+        'localevento',
+        'datadalocacao',
+        'datadasegundaprova',
+        'datadaretirada',
+        'observacoesevento',
+        'paleto',
+        'calca',
+        'camisa',
+        'colete',
+        'manga',
+        'barra_calca',
+        'modelo',
+        'cor',
+        'observacoesmedidas',
     ];
-    
-    
+
+
 
     protected $casts = [
         'datadoevento' => 'date',

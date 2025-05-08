@@ -16,7 +16,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h4 class="mb-1">{{ $totalNoivos }}</h4>
-                                <small>{{ $proximosEventos }} eventos próximos</small>
+                                <small>{{ count($proximosEventos) }} eventos próximos</small>
                             </div>
                             <i class="bi bi-person fs-3"></i>
                         </div>
@@ -81,9 +81,8 @@
                                 <div class="d-flex align-items-center">
                                     <i class="bi bi-calendar3 me-2 fs-5"></i>
                                     <div>
-                                        <div class="fw-semibold">{{ optional($evento->noivo)->nome ?? 'Noivo não encontrado' }}</div>
-
-                                        <small>{{ \Carbon\Carbon::parse($evento->data)->format('d/m/Y') }}</small>
+                                        <div class="fw-semibold">{{ $evento->nome }}</div>
+                                        <small>{{ \Carbon\Carbon::parse($evento->datadoevento)->format('d/m/Y') }}</small>
                                     </div>
                                 </div>
                                 <span class="badge bg-light text-dark">{{ $evento->padrinhos_count }} padrinhos</span>
@@ -121,13 +120,14 @@
                                     </div>
                                 </div>
                                 <small
-                                    class="text-muted">Retirada<br>{{ \Carbon\Carbon::parse($padrinho->data_retirada)->format('d/m/Y') }}</small>
+                                    class="text-muted">Retirada<br>{{ \Carbon\Carbon::parse($padrinho->datadaretirada)->format('d/m/Y') }}</small>
                                 <a href="{{ route('padrinhos.show', $padrinho->id) }}"
                                     class="btn btn-sm btn-outline-dark">Ver</a>
                             </div>
                         @endforeach
 
-                        <a href="{{ route('padrinhos.list') }}" class="btn btn-outline-secondary w-100 mt-3">Ver Todos os
+                        <a href="{{ route('padrinhos.list') }}" class="btn btn-outline-secondary w-100 mt-3">Ver Todos
+                            os
                             Padrinhos</a>
                     </div>
                 </div>

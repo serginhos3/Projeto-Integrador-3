@@ -12,13 +12,17 @@ class Padrinho extends Model
     protected $table = 'padrinhos';
 
     protected $fillable = [
-        'noivo_id',
         'nome',
-        'email',
         'telefone',
+        'email',
         'status',
-        'datadelocacao',
-        'dataderetirada',
+        'observacoes',
+
+        'noivo_id',
+        'datadalocacao',
+        'datadaretirada',
+        'observacoesevento',
+
         'paleto',
         'calca',
         'camisa',
@@ -27,12 +31,12 @@ class Padrinho extends Model
         'barra_calca',
         'modelo_terno',
         'cor_terno',
-        'observacoes',
+        'observacoes_medidas',
     ];
 
     protected $casts = [
-        'datadelocacao' => 'date',
-        'dataderetirada' => 'date',
+        'datadalocacao' => 'date',
+        'datadaretirada' => 'date',
     ];
 
     public function pedidos()
