@@ -53,7 +53,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="nome" class="block text-sm font-medium text-gray-700">Nome Completo</label>
-                            <input type="text" name="nome" id="nome" 
+                            <input type="text" name="nome" id="nome"
                                 class="mt-1 w-full rounded-md border-gray-300 shadow-sm @error('nome') is-invalid @enderror"
                                 value="{{ old('nome') }}" placeholder="Nome completo do noivo">
                             @error('nome')
@@ -350,6 +350,28 @@
         });
     </script>
     <script>
+        const localEvento = document.querySelector("#localevento")
+
+        localEvento.addEventListener('focusout', async (e) => {
+            let cep = e.target.value;
+
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const json = await response.json();
+
+            const dadosCep = {
+                rua: json.logradouro,
+                bairro: json.bairro,
+                cidade: json.localidade
+            }
+
+            const dadosEmString = Object.values(dadosCep).join(', ');
+            localEvento.value = dadosEmString
+
+        })
+
         const campos = ['paleto', 'calca', 'camisa', 'colete', 'manga', 'barra_calca'];
 
         campos.forEach(id => {
