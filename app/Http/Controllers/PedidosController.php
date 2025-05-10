@@ -73,11 +73,15 @@ class PedidosController extends Controller
             }
         }
 
+        // Extrai arrays para salvar no banco
+        $data_pagamentos = array_column($pagamentos, 'data_pagamento');
+        $metodo_pagamentos = array_column($pagamentos, 'metodo_pagamento');
+
         // Atualiza o request para validação
         $request->merge([
             'itens' => $itens,
             'pagamentos' => $pagamentos,
-            'valor_total_itens' => $valor_total_itens, // Atualiza corretamente o total
+            'valor_total_itens' => $valor_total_itens,
         ]);
 
         // Validação dos dados
@@ -118,6 +122,8 @@ class PedidosController extends Controller
             'datadoevento' => $validatedData['datadoevento'],
             'status_pagamento' => $validatedData['status_pagamento'],
             'observacoes' => $validatedData['observacoes'] ?? null,
+            'data_pagamento' => '2025-05-15,2025-05-20',
+            'metodo_pagamento' => 'Pix,Cartão de Débito',
         ]);
 
         // Se tiver padrinhos vinculados
@@ -144,6 +150,7 @@ class PedidosController extends Controller
     // Atualizar pedido
     public function atualizar(Request $request, $id)
     {
+
         $pedido = Pedido::findOrFail($id);
 
         // Recalcular valores dos itens
@@ -187,7 +194,7 @@ class PedidosController extends Controller
         }
 
         $validatedData = $request->validate([
-            'idnoivo' => 'required|exists:noivos,id',
+            'noivo_id' => 'required|exists:noivos,id',
             'status' => 'required|string',
             'status_pagamento' => 'required|string',
             'datadalocacao' => 'required|date',
@@ -198,15 +205,15 @@ class PedidosController extends Controller
         ]);
 
         $pedido->update([
-            'noivo_id' => $validatedData['idnoivo'],
+            'noivo_id' => $validatedData['noivo_id'],
             'descricao_itens' => implode(', ', $descricao_itens),
             'valor_itens' => implode(',', $valor_itens),
             'valor_total_itens' => $valor_total_itens,
             'valor_total_pago' => $valor_total_pago,
             'valor_restante' => $valor_total_itens - $valor_total_pago,
-            'data_pagamentos' => implode(',', $data_pagamentos),
-            'valor_pagamentos' => implode(',', $valor_pagamentos),
-            'metodo_pagamentos' => implode(',', $metodo_pagamentos),
+            'data_pagamento' => implode('|', $data_pagamentos),
+            'valor_pagamentos' => implode('|', $valor_pagamentos),
+            'metodo_pagamento' => implode('|', $metodo_pagamentos),
             'status' => $validatedData['status'],
             'status_pagamento' => $validatedData['status_pagamento'],
             'datadalocacao' => $validatedData['datadalocacao'],

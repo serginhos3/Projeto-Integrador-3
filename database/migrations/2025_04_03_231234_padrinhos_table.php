@@ -37,7 +37,6 @@ return new class extends Migration
             $table->string('cor_terno')->nullable();
             $table->text('observacoes_medidas')->nullable();
 
-
             $table->timestamps();
 
             // Chave estrangeira
@@ -45,29 +44,14 @@ return new class extends Migration
         });
     }
 
-
     public function down(): void
     {
+        // Primeiro remove a foreign key
         Schema::table('padrinhos', function (Blueprint $table) {
-            $table->dropColumn([
-                'status',
-                'observacoes',
-                'noivo_id',
-                'datadalocacao',
-                'datadaretirada',
-                'observacoesevento',
-                'paleto',
-                'calca',
-                'camisa',
-                'colete',
-                'manga',
-                'barra_calca',
-                'modelo_terno',
-                'cor_terno',
-                'observacoes_medidas'
-            ]);
-
             $table->dropForeign(['noivo_id']);
         });
+
+        // Depois remove a tabela inteira
+        Schema::dropIfExists('padrinhos');
     }
 };

@@ -88,7 +88,7 @@
                         <div class="border rounded-4 p-4">
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-3">
-                                    <h6 class="text-muted mb-1">Data e Hora</h6>
+                                    <h6 class="text-muted mb-1">Data</h6>
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-calendar-event me-2"></i>
                                         <div>
@@ -102,7 +102,7 @@
                                         <i class="bi bi-geo-alt me-2 mt-1"></i>
                                         <div>
                                             <strong>{{ $noivo->localevento }}</strong><br>
-                                            <small class="text-muted">{{ $noivo->localevento }}</small>
+                                            <small class="text-muted">{{ $noivo->enderecoevento }}</small>
                                         </div>
                                     </div>
                                 </div>

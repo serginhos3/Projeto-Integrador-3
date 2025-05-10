@@ -135,6 +135,14 @@
                         </div>
 
                         <div>
+                            <label for="enderecoevento" class="block text-sm font-medium text-gray-700">Endereço do
+                                Evento</label>
+                            <input type="text" name="enderecoevento" id="enderecoevento"
+                                class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+                                placeholder="Digite o cep de onde será realizado o evento">
+                        </div>
+
+                        <div>
                             <label for="datadalocacao" class="block text-sm font-medium text-gray-700">Data de
                                 Locação</label>
                             <input type="date" name="datadalocacao" id="datadalocacao"
@@ -350,9 +358,10 @@
         });
     </script>
     <script>
-        const localEvento = document.querySelector("#localevento")
 
-        localEvento.addEventListener('focusout', async (e) => {
+        const endereco = document.querySelector("#endereco")
+
+        endereco.addEventListener('focusout', async (e) => {
             let cep = e.target.value;
 
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -368,7 +377,30 @@
             }
 
             const dadosEmString = Object.values(dadosCep).join(', ');
-            localEvento.value = dadosEmString
+            endereco.value = dadosEmString
+
+        })
+
+
+        const enderecoEvento = document.querySelector("#enderecoevento")
+
+        enderecoEvento.addEventListener('focusout', async (e) => {
+            let cep = e.target.value;
+
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const json = await response.json();
+
+            const dadosCep = {
+                rua: json.logradouro,
+                bairro: json.bairro,
+                cidade: json.localidade
+            }
+
+            const dadosEmString = Object.values(dadosCep).join(', ');
+            enderecoEvento.value = dadosEmString
 
         })
 

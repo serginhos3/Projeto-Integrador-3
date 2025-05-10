@@ -20,7 +20,7 @@ class NoivosController extends Controller
         return view('noivos.cadastrar');
     }
 
-    public function show($id)
+    public function show($id): View
     {
         $noivo = Noivo::with(['evento', 'padrinhos'])->findOrFail($id);
 
@@ -33,29 +33,29 @@ class NoivosController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // Informações Pessoais
             'nome' => 'required|string|max:255',
-            'telefone' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'status' => 'required|string',
+            'telefone' => 'nullable|string|max:20',
+            'email' => 'nullable|email',
+            'endereco' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:50',
             'observacoesnoivo' => 'nullable|string',
-
-            // Informações do Evento
-            'datadoevento' => 'required|date',
-            'datadalocacao' => 'required|date',
-            'datadasegundaprova' => 'required|date',
-            'datadaretirada' => 'required|date',
+    
+            'datadoevento' => 'nullable|date',
+            'localevento' => 'nullable|string|max:255',
+            'enderecoevento' => 'nullable|string|max:255',
+            'datadalocacao' => 'nullable|date',
+            'datadasegundaprova' => 'nullable|date',
+            'datadaretirada' => 'nullable|date',
             'observacoesevento' => 'nullable|string',
-
-            // Medidas do Terno
-            'paleto' => 'required|string|max:255',
-            'calca' => 'required|string|max:255',
-            'camisa' => 'required|string|max:255',
-            'colete' => 'required|string|max:255',
-            'manga' => 'required|string|max:255',
-            'barra_calca' => 'required|string|max:255',
-            'modelo' => 'required|string|max:255',
-            'cor' => 'required|string|max:255',
+    
+            'paleto' => 'nullable|string',
+            'calca' => 'nullable|string',
+            'camisa' => 'nullable|string',
+            'colete' => 'nullable|string',
+            'manga' => 'nullable|string',
+            'barra_calca' => 'nullable|string',
+            'modelo' => 'nullable|string',
+            'cor' => 'nullable|string',
             'observacoesmedidas' => 'nullable|string',
         ]);
 
@@ -85,6 +85,7 @@ class NoivosController extends Controller
     
             'datadoevento' => 'nullable|date',
             'localevento' => 'nullable|string|max:255',
+            'enderecoevento' => 'nullable|string|max:255',
             'datadalocacao' => 'nullable|date',
             'datadasegundaprova' => 'nullable|date',
             'datadaretirada' => 'nullable|date',
@@ -110,7 +111,7 @@ class NoivosController extends Controller
         $noivo = Noivo::findOrFail($id);
         $noivo->update($validator->validated());
 
-        return redirect()->route('noivos.list')->with('status', 'Noivo atualizado com sucesso!');
+        return redirect()->route('noivos.list')->with('success', 'Noivo atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -118,6 +119,6 @@ class NoivosController extends Controller
         $noivo = Noivo::findOrFail($id);
         $noivo->delete();
 
-        return redirect()->route('noivos.list')->with('status', 'Noivo excluído com sucesso!');
+        return redirect()->route('noivos.list')->with('success', 'Noivo excluído com sucesso!');
     }
 }

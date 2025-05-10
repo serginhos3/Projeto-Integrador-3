@@ -18,12 +18,15 @@ class Pedido extends Model
         'valor_total_pago',
         'valor_restante',
         'status',
+        'valor_pagamentos',
+        'metodo_pagamento',
         'datadalocacao',
         'datadasegundaprova',
         'datadaretirada',
         'datadoevento',
         'status_pagamento',
         'observacoes',
+        'data_pagamento',
     ];
 
     // Relacionamento com o Noivo

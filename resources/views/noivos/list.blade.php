@@ -23,7 +23,7 @@
                         <th class="py-3 px-4 text-start">Nome</th>
                         <th class="py-3 px-4 text-start">Telefone</th>
                         <th class="py-3 px-4 text-start">Email</th>
-                        <th class="py-3 px-4 text-start">Evento</th>
+                        <th class="py-3 px-4 text-start">Data do Evento</th>
                         <th class="py-3 px-4 text-center">Padrinhos</th>
                         <th class="py-3 px-4 text-start">Status</th>
                         <th class="py-3 px-4 text-center">Ações</th>

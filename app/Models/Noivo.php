@@ -17,6 +17,7 @@ class Noivo extends Model
         'observacoesnoivo',
         'datadoevento',
         'localevento',
+        'enderecoevento',
         'datadalocacao',
         'datadasegundaprova',
         'datadaretirada',

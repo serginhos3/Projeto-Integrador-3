@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status')->nullable();
 
             $table->string('localevento', 255)->nullable();
+            $table->string('enderecoevento', 255)->nullable();
             $table->date('datadoevento')->nullable();
             $table->date('datadalocacao')->nullable();
             $table->date('datadasegundaprova')->nullable();

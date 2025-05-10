@@ -210,9 +210,10 @@
                     <p class="text-sm text-gray-500 mb-6">Gerencie os pagamentos do pedido.</p>
 
                     @php
-                        $datasPagamentos = explode(',', $pedido->data_pagamento ?? '');
-                        $valoresPagamentos = explode(',', $pedido->valor_itens ?? '');
-                        $metodosPagamentos = explode(',', $pedido->metodo_pagamento ?? '');
+                        $datasPagamentos = explode('|', $pedido->data_pagamento ?? '');
+                        $valoresPagamentos = explode('|', $pedido->valor_itens ?? '');
+                        $metodosPagamentos = explode('|', $pedido->metodo_pagamento ?? '');
+                        $valoresPagamentos = explode('|', $pedido->valor_pagamentos ?? '');
                     @endphp
 
                     <div id="pagamentosContainer">
@@ -277,7 +278,6 @@
 
     </form>
     </div>
-
     <script>
         const tabs = document.querySelectorAll('#tabs a');
         const panes = document.querySelectorAll('.tab-pane');

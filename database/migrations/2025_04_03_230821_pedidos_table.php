@@ -14,14 +14,16 @@ return new class extends Migration
             $table->foreignId('padrinho_id')->nullable()->constrained('noivos')->onDelete('set null');
             
             $table->text('descricao_itens')->nullable(); // Armazena os itens em formato de texto
+            $table->text('valor_itens')->nullable(); // <- ADICIONE ESSA LINHA
             $table->decimal('valor_total_itens', 10, 2)->default(0); // Total dos itens
             $table->decimal('valor_total_pago', 10, 2)->default(0); // Quanto foi pago
             $table->decimal('valor_restante', 10, 2)->default(0); // Valor restante a pagar
             
             $table->string('status')->default('Ativo');
             $table->string('status_pagamento')->default('Pendente');
-            $table->string('metodo_pagamento')->nullable(); // Tipo de pagamento
-            $table->date('data_pagamento')->nullable(); // Data do pagamento
+            $table->text('metodo_pagamento')->nullable(); // Tipo de pagamento
+            $table->text('data_pagamento')->nullable(); // Data do pagamento
+            $table->text('valor_pagamentos')->nullable();
             
             $table->date('datadalocacao')->nullable();
             $table->date('datadasegundaprova')->nullable();
