@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/noivos', [NoivosController::class, 'store'])->name('noivos.store');
     Route::put('/noivo/{id}', [NoivosController::class, 'atualizar'])->name('noivo.atualizar');
     Route::delete('/noivos/{id}', [NoivosController::class, 'destroy'])->name('noivos.destroy');
-    Route::post('/noivos/status', [NoivosController::class, 'status'])->name('noivos.status');
+    Route::post('/noivos/{noivo}/status/{status}', [NoivosController::class, 'alterarStatus'])->name('noivos.status');
     Route::get('/pedidos/obter-informacoes-noivo/{id}', [PedidosController::class, 'obterInformacoesNoivo']);
 });
 

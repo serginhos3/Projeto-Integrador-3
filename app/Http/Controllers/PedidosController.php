@@ -99,7 +99,7 @@ class PedidosController extends Controller
             'datadasegundaprova' => 'required|date',
             'datadaretirada' => 'required|date',
             'datadoevento' => 'required|date',
-            'status_pagamento' => 'required|string',
+            'status_pagamento' => 'nullable|string',
             'observacoes' => 'nullable|string',
         ]);
 
@@ -120,7 +120,7 @@ class PedidosController extends Controller
             'datadasegundaprova' => $validatedData['datadasegundaprova'],
             'datadaretirada' => $validatedData['datadaretirada'],
             'datadoevento' => $validatedData['datadoevento'],
-            'status_pagamento' => $validatedData['status_pagamento'],
+            'status_pagamento' => $validatedData['status_pagamento'] ?? null,
             'observacoes' => $validatedData['observacoes'] ?? null,
             'data_pagamento' => '2025-05-15,2025-05-20',
             'metodo_pagamento' => 'Pix,Cartão de Débito',
@@ -196,7 +196,7 @@ class PedidosController extends Controller
         $validatedData = $request->validate([
             'noivo_id' => 'required|exists:noivos,id',
             'status' => 'required|string',
-            'status_pagamento' => 'required|string',
+            'status_pagamento' => 'nullable|string',
             'datadalocacao' => 'required|date',
             'datadasegundaprova' => 'required|date',
             'datadaretirada' => 'required|date',
@@ -215,7 +215,7 @@ class PedidosController extends Controller
             'valor_pagamentos' => implode('|', $valor_pagamentos),
             'metodo_pagamento' => implode('|', $metodo_pagamentos),
             'status' => $validatedData['status'],
-            'status_pagamento' => $validatedData['status_pagamento'],
+            'status_pagamento' => $validatedData['status_pagamento'] ?? null,
             'datadalocacao' => $validatedData['datadalocacao'],
             'datadasegundaprova' => $validatedData['datadasegundaprova'],
             'datadaretirada' => $validatedData['datadaretirada'],

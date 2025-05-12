@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <div class="container py-6 mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold">Padrinhos</h1>
@@ -7,7 +8,6 @@
                 <i class="bi bi-plus-lg"></i> Novo Padrinho
             </a>
         </div>
-
 
         <div class="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
 

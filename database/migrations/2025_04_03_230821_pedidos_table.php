@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('valor_restante', 10, 2)->default(0); // Valor restante a pagar
             
             $table->string('status')->default('Ativo');
-            $table->string('status_pagamento')->default('Pendente');
+            $table->string('status_pagamento')->nullable()->default(null)->change();
             $table->text('metodo_pagamento')->nullable(); // Tipo de pagamento
             $table->text('data_pagamento')->nullable(); // Data do pagamento
             $table->text('valor_pagamentos')->nullable();

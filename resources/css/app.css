@@ -6,3 +6,7 @@
     display: none!important;
 }
 
+.dropdown-menu {
+    position: absolute !important;
+    z-index: 9999;
+}

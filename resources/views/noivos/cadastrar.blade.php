@@ -1,8 +1,9 @@
 <x-app-layout>
+    
     <div class="max-w-3xl w-full mx-auto p-4 bg-white rounded-lg shadow-md mt-10">
         <div class="flex items-center mb-6">
             <a href="{{ route('noivos.list') }}"
-                class="mr-4 text-gray-500 hover:text-black transition-colors duration-200">
+                class="sm:mr-4 mr-2 text-gray-500 hover:text-black transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -12,7 +13,7 @@
         </div>
 
 
-        <ul class="flex border-b mb-6" id="tabs">
+        <ul class="flex border-b mb-4 overflow-x-auto" id="tabs">
             <li class="mr-1">
                 <a href="#tab-pessoal"
                     class="inline-block py-2 px-4 font-semibold border-b-2 border-black text-black">Informações
@@ -44,13 +45,12 @@
 
 
             <div id="tab-content">
-
                 <div id="tab-pessoal" class="tab-pane">
                     <h2 class="text-xl font-bold mb-1">Informações Pessoais</h2>
                     <p class="text-sm text-gray-500 mb-6">Preencha os dados pessoais do noivo para cadastro no sistema.
                     </p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <div>
                             <label for="nome" class="block text-sm font-medium text-gray-700">Nome Completo</label>
                             <input type="text" name="nome" id="nome"
@@ -112,7 +112,7 @@
                     <h2 class="text-xl font-bold mb-1">Informações do Evento</h2>
                     <p class="text-sm text-gray-500 mb-6">Detalhes sobre o evento e datas importantes.</p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <div>
                             <label for="datadoevento" class="block text-sm font-medium text-gray-700">Data do
                                 Evento</label>
@@ -195,7 +195,7 @@
                     <h2 class="text-xl font-bold mb-1">Medidas do Terno</h2>
                     <p class="text-sm text-gray-500 mb-6">Informe os detalhes exatos para o terno do noivo.</p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <div>
                             <label for="paleto" class="block text-sm font-medium text-gray-700">Paletó</label>
                             <input type="text" name="paleto" id="paleto" inputmode="decimal"

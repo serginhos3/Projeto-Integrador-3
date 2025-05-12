@@ -2,7 +2,7 @@
     <div class="container py-6 mx-auto">
 
         <!-- Cabeçalho -->
-        <div class="mb-6 d-flex justify-content-between align-items-center">
+        <div class="mb-6 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
             <div>
                 <a href="{{ route('pedidos.list') }}"
                     class="mr-4 text-gray-500 hover:text-black transition-colors duration-200">
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Blocos principais -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <!-- Informações do Cliente -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">

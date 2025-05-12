@@ -61,11 +61,11 @@
     </style>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 flex flex-row">
+<body class="font-sans antialiased bg-gray-100">
+    <div class="min-h-screen flex flex-row">
         @include('layouts.navigation')
 
-        <main class="d-flex flex-1">
+        <main class="flex-1 px-4 sm:px-6 lg:px-8 py-6 transition-all duration-300 ease-in-out">
             <button id="menu-toggle" class="text-white text-3xl absolute top-6 left-6 z-10">
                 &#9776;
             </button>

@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <div class="container py-6 mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold">Noivos</h1>
@@ -8,7 +9,6 @@
             </a>
         </div>
 
-
         <div class="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
             <div class="relative mb-4">
                 <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"></i>
@@ -17,7 +17,7 @@
                     style="font-size: 0.95rem;">
             </div>
 
-            <table id="noivosTable" class="min-w-full text-sm text-gray-700">
+            <table id="noivosTable" class="min-w-full w-full whitespace-nowrap text-sm text-gray-700">
                 <thead class="border-b">
                     <tr class="text-gray-600">
                         <th class="py-3 px-4 text-start">Nome</th>
@@ -61,19 +61,21 @@
                                         class="px-2 py-1 text-xs rounded-full bg-gray-300 text-gray-700">{{ ucfirst($status) }}</span>
                                 @endif
                             </td>
+
                             <td class="py-3 px-4 text-center">
                                 <div class="relative inline-block text-left">
                                     <button type="button" class="text-gray-600 hover:text-black"
                                         data-bs-toggle="dropdown">
                                         &#8942;
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-end text-sm shadow-sm rounded-md mt-2">
+                                    <ul
+                                        class="dropdown-menu dropdown-menu-end text-sm shadow-sm rounded-md mt-2 z-50 w-48">
                                         <li><a class="dropdown-item" href="{{ route('noivos.show', $noivo->id) }}">Ver
                                                 detalhes</a></li>
                                         <li><a class="dropdown-item"
                                                 href="{{ route('noivos.editar', $noivo->id) }}">Editar</a></li>
                                         <li><a class="dropdown-item"
-                                                href="{{ route('padrinhos.list', ['noivo' => $noivo->id]) }}">Adicionar
+                                                href="{{ route('padrinhos.cadastrar', ['noivo' => $noivo->id]) }}">Adicionar
                                                 padrinho</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
@@ -94,6 +96,16 @@
                                                 @csrf
                                                 <button type="submit" class="dropdown-item text-red-600">Cancelar
                                                     evento</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="{{ route('noivos.destroy', $noivo->id) }}" method="POST"
+                                                onsubmit="return confirm('Tem certeza que deseja excluir este noivo? Esta ação não pode ser desfeita.')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    Excluir noivo
+                                                </button>
                                             </form>
                                         </li>
                                     </ul>

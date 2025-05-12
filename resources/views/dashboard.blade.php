@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
             <h2 class="fw-bold">Dashboard</h2>
             <div>
                 <a href="{{ route('noivos.cadastrar') }}" class="btn btn-dark me-2">+ Novo Noivo</a>
@@ -10,7 +10,7 @@
 
         <!-- Cards principais -->
         <div class="row mb-4">
-            <div class="col-md-3 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
@@ -70,7 +70,7 @@
 
         <!-- Próximos Eventos e Padrinhos Recentes -->
         <div class="row">
-            <div class="col-md-6 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <h5 class="fw-bold">Próximos Eventos</h5>
@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
                         <h5 class="fw-bold">Padrinhos Recentes</h5>

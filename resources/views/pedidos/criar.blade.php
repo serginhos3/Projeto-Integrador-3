@@ -96,7 +96,7 @@
                                 Pagamento</label>
                             <select id="status_pagamento" name="status_pagamento"
                                 class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
-                                <option value="" selected disabled>Selecione o status</option>
+                                <option value="">Selecione o status</option>
                                 <option value="Pendente">Pendente</option>
                                 <option value="Pago">Pago</option>
                                 <option value="Parcial">Parcial</option>

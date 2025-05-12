@@ -24,59 +24,85 @@
                 </div>
             </div>
 
-            <!-- CARD LATERAL -->
+            <!-- CARD LATERAL MODERNO -->
             <div class="col-md-4 mb-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body text-center">
-                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
-                            style="width: 80px; height: 80px; font-size: 24px;">
+                <div class="card shadow-sm border-0 rounded-4 bg-white">
+                    <div class="card-body text-center py-5 px-4">
+                        <!-- Ícone com as iniciais -->
+                        <div class="rounded-circle bg-gradient-to-br from-indigo-500 to-blue-600 text-white fw-bold d-flex align-items-center justify-content-center mx-auto mb-3 shadow"
+                            style="width: 70px; height: 70px; font-size: 22px;">
                             {{ strtoupper(substr($noivo->nome, 0, 2)) }}
                         </div>
-                        <h5 class="card-title">{{ $noivo->nome }}</h5>
-                        <p class="text-muted">{{ $noivo->email }}</p>
-                        <p><i class="bi bi-telephone me-1"></i>{{ $noivo->telefone }}</p>
 
-                        <div class="d-flex justify-content-between mt-4">
+                        <!-- Nome e contato -->
+                        <h5 class="card-title mb-1">{{ $noivo->nome }}</h5>
+                        <p class="text-muted mb-1 small">{{ $noivo->email }}</p>
+                        <p class="text-muted mb-3"><i class="bi bi-telephone me-1"></i>{{ $noivo->telefone }}</p>
+
+                        <!-- Estatísticas -->
+                        <div class="d-flex justify-content-around mb-4">
                             <div>
-                                <h6>{{ $noivo->padrinhos_ativos ?? 0 }}</h6>
-                                <small class="text-muted">Padrinhos Ativos</small>
+                                <h6 class="mb-0 fw-bold">{{ $noivo->padrinhos_ativos ?? 0 }}</h6>
+                                <small class="text-muted">Ativos</small>
                             </div>
                             <div>
-                                <h6>{{ $noivo->padrinhos_inativos ?? 0 }}</h6>
-                                <small class="text-muted">Padrinhos Inativos</small>
+                                <h6 class="mb-0 fw-bold">{{ $noivo->padrinhos_inativos ?? 0 }}</h6>
+                                <small class="text-muted">Inativos</small>
                             </div>
                         </div>
-                        <div>
+
+                        <!-- Observações -->
+                        <div class="text-start bg-light p-3 rounded mb-3 shadow-sm">
                             <h6 class="text-muted mb-1">Observações</h6>
-                            <p>{{ $noivo->observacoesnoivo ?? 'Nenhuma observação cadastrada.' }}</p>
+                            <p class="mb-0 small">{{ $noivo->observacoesnoivo ?? 'Nenhuma observação cadastrada.' }}</p>
                         </div>
 
-                        <a href="#" class="btn btn-outline-primary mt-3 w-100">
-                            + Adicionar Padrinho
+                        <!-- Botão -->
+                        <a href="#"
+                            class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-person-plus-fill"></i>
+                            <span>Adicionar Padrinho</span>
                         </a>
                     </div>
                 </div>
             </div>
 
+
             <!-- CONTEÚDO DAS ABAS -->
             <div class="col-md-8">
                 <!-- ABAS -->
-                <ul class="nav nav-tabs mb-3" id="tabsNoivo" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#evento" type="button"
-                            role="tab">Informações do Evento</button>
+                <ul class="nav nav-tabs mb-3 border-0" id="tabsNoivo" role="tablist">
+                    <li class="nav-item me-2" role="presentation">
+                        <button class="nav-link active d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#evento" type="button" role="tab"
+                            style="background-color: white; border: 1px solid #dee2e6;">
+                            <i class="bi bi-calendar-event text-primary"></i>
+                            <span class="fw-medium text-dark">Evento</span>
+                        </button>
+                    </li>
+                    <li class="nav-item me-2" role="presentation">
+                        <button class="nav-link d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#medidas" type="button" role="tab"
+                            style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                            <i class="bi bi-rulers text-success"></i>
+                            <span class="fw-medium text-dark">Medidas</span>
+                        </button>
+                    </li>
+                    <li class="nav-item me-2" role="presentation">
+                        <button class="nav-link d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#padrinhos" type="button" role="tab"
+                            style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                            <i class="bi bi-people-fill text-info"></i>
+                            <span class="fw-medium text-dark">Padrinhos</span>
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#medidas" type="button"
-                            role="tab">Medidas</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#padrinhos" type="button"
-                            role="tab">Padrinhos</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pedido" type="button"
-                            role="tab">Pedido</button>
+                        <button class="nav-link d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#pedido" type="button" role="tab"
+                            style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                            <i class="bi bi-receipt-cutoff text-warning"></i>
+                            <span class="fw-medium text-dark">Pedido</span>
+                        </button>
                     </li>
                 </ul>
 
@@ -84,35 +110,53 @@
                 <div class="tab-content bg-white p-4 shadow-sm border rounded-4" id="tabContentNoivo">
                     <!-- Evento -->
                     <div class="tab-pane fade show active" id="evento" role="tabpanel">
-                        <h5 class="mb-4 fw-bold">Detalhes do Evento</h5>
-                        <div class="border rounded-4 p-4">
-                            <div class="row mb-3">
+                        <h5 class="mb-4 fw-bold d-flex align-items-center gap-2">
+                            Detalhes do Evento
+                        </h5>
+
+                        <div class="border rounded-4 p-4 bg-light shadow-sm">
+                            <div class="row mb-4">
+                                <!-- Data do Evento -->
                                 <div class="col-md-6 mb-3">
-                                    <h6 class="text-muted mb-1">Data</h6>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-calendar-event me-2"></i>
-                                        <div>
-                                            <strong>{{ \Carbon\Carbon::parse($noivo->datadoevento)->format('d/m/Y') }}</strong>
-                                        </div>
+                                    <div class="bg-white rounded p-3 shadow-sm h-100">
+                                        <h6 class="text-muted mb-2 d-flex align-items-center gap-2">
+                                            <i class="bi bi-calendar-event-fill text-primary"></i>
+                                            Data do Evento
+                                        </h6>
+                                        <p class="mb-0 fw-semibold fs-6">
+                                            {{ \Carbon\Carbon::parse($noivo->datadoevento)->format('d/m/Y') }}
+                                        </p>
                                     </div>
                                 </div>
+
+                                <!-- Local do Evento -->
                                 <div class="col-md-6 mb-3">
-                                    <h6 class="text-muted mb-1">Local</h6>
-                                    <div class="d-flex align-items-start">
-                                        <i class="bi bi-geo-alt me-2 mt-1"></i>
-                                        <div>
-                                            <strong>{{ $noivo->localevento }}</strong><br>
-                                            <small class="text-muted">{{ $noivo->enderecoevento }}</small>
-                                        </div>
+                                    <div class="bg-white rounded p-3 shadow-sm h-100">
+                                        <h6 class="text-muted mb-2 d-flex align-items-center gap-2">
+                                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                                            Local do Evento
+                                        </h6>
+                                        <p class="mb-1 fw-semibold">{{ $noivo->localevento }}</p>
+                                        <p class="mb-0 small text-muted">{{ $noivo->enderecoevento }}</p>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Observações -->
                             <div class="mt-3">
-                                <h6 class="text-muted mb-1">Observações</h6>
-                                <p>{{ $noivo->observacoesevento ?? 'Nenhuma observação cadastrada.' }}</p>
+                                <div class="bg-white rounded p-3 shadow-sm">
+                                    <h6 class="text-muted mb-2 d-flex align-items-center gap-2">
+                                        <i class="bi bi-chat-left-text-fill text-secondary"></i>
+                                        Observações
+                                    </h6>
+                                    <p class="mb-0 text-dark fw-medium">
+                                        {{ $noivo->observacoesevento ?? 'Nenhuma observação cadastrada.' }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Medidas -->
                     <div class="tab-pane fade" id="medidas" role="tabpanel">
@@ -167,27 +211,32 @@
                     <!-- Padrinhos -->
                     <div class="tab-pane fade" id="padrinhos" role="tabpanel">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h5 class="mb-0 fw-bold">Padrinhos</h5>
-                            <a href="{{ route('padrinhos.cadastrar') }}" class="btn btn-primary">+ Novo Padrinho</a>
+                            <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                                <i class="bi bi-people-fill text-primary fs-5"></i> Padrinhos
+                            </h5>
+                            <a href="{{ route('padrinhos.cadastrar') }}" class="btn btn-dark rounded-pill shadow-sm">
+                                + Novo Padrinho
+                            </a>
                         </div>
-                        <div class="border rounded-4 p-4 shadow-sm bg-light">
+
+                        <div class="bg-white border rounded-4 p-4 shadow-sm">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead class="text-muted">
+                                <table class="table align-middle table-hover">
+                                    <thead class="bg-light text-muted text-uppercase small">
                                         <tr>
                                             <th>Nome</th>
                                             <th>Telefone</th>
-                                            <th>Data de Locação</th>
-                                            <th>Data de Retirada</th>
+                                            <th>Locação</th>
+                                            <th>Retirada</th>
                                             <th>Status</th>
-                                            <th>Ações</th>
+                                            <th class="text-center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @if ($noivo->padrinhos && $noivo->padrinhos->count() > 0)
                                             @foreach ($noivo->padrinhos as $padrinho)
                                                 <tr>
-                                                    <td>{{ $padrinho->nome }}</td>
+                                                    <td class="fw-semibold">{{ $padrinho->nome }}</td>
                                                     <td>{{ $padrinho->telefone }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($padrinho->datadalocacao)->format('d/m/Y') }}
                                                     </td>
@@ -195,20 +244,21 @@
                                                     </td>
                                                     <td>
                                                         <span
-                                                            class="badge {{ $padrinho->status == 'Ativo' ? 'bg-success' : 'bg-secondary' }} rounded-pill">
+                                                            class="badge rounded-pill {{ $padrinho->status == 'Ativo' ? 'bg-success' : 'bg-secondary' }}">
                                                             {{ $padrinho->status }}
                                                         </span>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <a href="{{ route('padrinhos.show', $padrinho->id) }}"
-                                                            class="btn btn-outline-primary btn-sm">Ver
-                                                            detalhes</a>
+                                                            class="btn btn-sm btn-outline-dark rounded-pill d-flex align-items-center justify-content-center gap-2 px-3">
+                                                            <i class="bi bi-eye-fill"></i> Ver detalhes
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="6" class="text-center text-muted">Nenhum padrinho
+                                                <td colspan="6" class="text-center text-muted py-4">Nenhum padrinho
                                                     cadastrado para este noivo.</td>
                                             </tr>
                                         @endif
@@ -218,16 +268,73 @@
                         </div>
                     </div>
 
+
                     <!-- Pedido -->
                     <div class="tab-pane fade" id="pedido" role="tabpanel">
                         @if ($noivo->pedido)
-                            <h5>Pedido</h5>
-                            <p><strong>Descrição:</strong> {{ $noivo->pedido->descricao }}</p>
-                            <p><strong>Valor:</strong> R$ {{ number_format($noivo->pedido->valor, 2, ',', '.') }}</p>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="text-muted">
+                                        <tr>
+                                            <th>Nº Pedido</th>
+                                            <th>Noivo</th>
+                                            <th>Padrinhos</th>
+                                            <th>Data de Locação</th>
+                                            <th>Data de Retirada</th>
+                                            <th>Valor</th>
+                                            <th>Pagamento</th>
+                                            <th>Status</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>#{{ $noivo->pedido->id }}</strong></td>
+                                            <td>{{ $noivo->nome }}</td>
+                                            <td>
+                                                <span class="border rounded-circle px-2 text-muted">
+                                                    {{ $noivo->pedido->padrinhos->count() }}
+                                                </span>
+                                            </td>
+                                            <td>{{ \Carbon\Carbon::parse($noivo->pedido->datadalocacao)->format('d/m/Y') }}
+                                            </td>
+                                            <td>{{ \Carbon\Carbon::parse($noivo->pedido->datadaretirada)->format('d/m/Y') }}
+                                            </td>
+                                            <td>R$ {{ number_format($noivo->pedido->valor_total_itens, 2, ',', '.') }}</td>
+                                            <td>
+                                                <span
+                                                    class="badge bg-warning text-white px-3 rounded-pill">Parcial</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-primary px-3 rounded-pill">Ativo</span>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm text-muted" type="button"
+                                                        data-bs-toggle="dropdown">
+                                                        &#8942;
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li>
+                                                            <a href="{{ route('pedidos.show', $noivo->pedido->id) }}"
+                                                                class="dropdown-item">Ver detalhes</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('pedidos.editar', $noivo->pedido->id) }}"
+                                                                class="dropdown-item">Editar</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         @else
                             <p class="text-muted">Pedido não cadastrado.</p>
                         @endif
                     </div>
+
                 </div>
             </div>
         </div>

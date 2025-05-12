@@ -26,143 +26,214 @@
 
             <!-- CARD LATERAL -->
             <div class="col-md-4 mb-4">
-                <div class="card shadow-sm border-0 rounded-4">
-                    <div class="card-body text-center">
-                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
-                            style="width: 80px; height: 80px; font-size: 24px;">
-                            {{ strtoupper(substr($padrinho->nome_padrinho, 0, 2)) }}
+                <div class="card shadow border-0 rounded-4">
+                    <div class="card-body text-center p-4">
+                        <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center shadow"
+                            style="width: 80px; height: 80px; background: linear-gradient(135deg, #6b73ff, #000dff); color: white; font-size: 24px; font-weight: bold;">
+                            {{ strtoupper(substr($padrinho->nome, 0, 2)) }}
                         </div>
-                        <h5 class="card-title">{{ $padrinho->nome_padrinho }}</h5>
-                        <p class="text-muted">{{ $padrinho->email }}</p>
-                        <p><i class="bi bi-telephone me-1"></i>{{ $padrinho->telefone }}</p>
 
-                        <div class="d-flex justify-content-between mt-4">
+                        <h5 class="card-title fw-semibold">{{ $padrinho->nome }}</h5>
+                        <p class="text-muted mb-1"><i class="bi bi-envelope me-1"></i>{{ $padrinho->email }}</p>
+                        <p class="text-muted"><i class="bi bi-telephone me-1"></i>{{ $padrinho->telefone }}</p>
+
+                        <div class="d-flex justify-content-center gap-4 my-4">
                             <div>
-                                <h6>{{ $padrinho->status ?? 'N/A' }}</h6>
-                                <small class="text-muted">Status</small>
+                                @php
+                                    $status = strtolower($padrinho->status ?? '');
+                                    $statusClass = match ($status) {
+                                        'ativo' => 'bg-success text-white',
+                                        'inativo' => 'bg-secondary text-white',
+                                        'pendente' => 'bg-warning text-dark',
+                                        default => 'bg-light text-dark',
+                                    };
+                                @endphp
+                                <span class="badge px-3 py-2 rounded-pill shadow-sm {{ $statusClass }}">
+                                    {{ ucfirst($status) ?: 'Sem Status' }}
+                                </span>
+                                <small class="d-block text-muted mt-1">Status</small>
                             </div>
                         </div>
 
                         <a href="{{ route('padrinhos.editar', $padrinho->id) }}"
-                            class="btn btn-outline-primary mt-3 w-100">
+                            class="btn btn-dark w-100 shadow-sm rounded-pill fw-semibold">
                             Editar Padrinho
                         </a>
                     </div>
                 </div>
             </div>
 
+
             <!-- CONTEÚDO DAS ABAS -->
             <div class="col-md-8">
                 <!-- ABAS -->
-                <ul class="nav nav-tabs mb-3" id="tabsPadrinho" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#informacoes"
-                            type="button" role="tab">Informações Pessoais</button>
+                <ul class="nav nav-tabs mb-3 border-0" id="tabsPadrinho" role="tablist">
+                    <li class="nav-item me-2" role="presentation">
+                        <button class="nav-link active d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#informacoes" type="button" role="tab"
+                            style="background-color: white; border: 1px solid #dee2e6;">
+                            <i class="bi bi-person-circle text-primary"></i>
+                            <span class="fw-medium text-dark">Informações</span>
+                        </button>
+                    </li>
+                    <li class="nav-item me-2" role="presentation">
+                        <button class="nav-link d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#evento" type="button" role="tab"
+                            style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                            <i class="bi bi-calendar2-week text-success"></i>
+                            <span class="fw-medium text-dark">Evento</span>
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#evento" type="button"
-                            role="tab">Informações do Evento</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#medidas" type="button"
-                            role="tab">Medidas</button>
+                        <button class="nav-link d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
+                            data-bs-toggle="tab" data-bs-target="#medidas" type="button" role="tab"
+                            style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                            <i class="bi bi-rulers text-info"></i>
+                            <span class="fw-medium text-dark">Medidas</span>
+                        </button>
                     </li>
                 </ul>
+
 
                 <!-- CONTEÚDO DAS ABAS -->
                 <div class="tab-content bg-white p-4 shadow-sm border rounded-4" id="tabContentPadrinho">
                     <!-- Informações Pessoais -->
                     <div class="tab-pane fade show active" id="informacoes" role="tabpanel">
-                        <h5 class="mb-4 fw-bold">Informações Pessoais</h5>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Nome</h6>
-                                <p>{{ $padrinho->nome }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Telefone</h6>
-                                <p>{{ $padrinho->telefone }}</p>
+                        <h5 class="mb-4 fw-bold d-flex align-items-center gap-2">
+                            <i class="bi bi-person-circle text-primary"></i> Informações Pessoais
+                        </h5>
+
+                        <div class="border rounded-4 p-4 bg-light shadow-sm">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <small class="text-muted">Nome</small>
+                                    <div class="fw-semibold">{{ $padrinho->nome }}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted">Telefone</small>
+                                    <div class="fw-semibold"><i
+                                            class="bi bi-telephone me-1"></i>{{ $padrinho->telefone }}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted">Email</small>
+                                    <div class="fw-semibold"><i class="bi bi-envelope me-1"></i>{{ $padrinho->email }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted">Status</small>
+                                    <div>
+                                        @php
+                                            $status = strtolower($padrinho->status);
+                                        @endphp
+                                        @if ($status === 'ativo')
+                                            <span class="badge bg-success px-3 py-1 rounded-pill">Ativo</span>
+                                        @elseif ($status === 'inativo')
+                                            <span class="badge bg-secondary px-3 py-1 rounded-pill">Inativo</span>
+                                        @else
+                                            <span class="badge bg-light text-muted px-3 py-1 rounded-pill">Não
+                                                definido</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <small class="text-muted">Observações</small>
+                                    <p class="fw-medium mb-0">
+                                        {{ $padrinho->observacoes ?? 'Nenhuma observação cadastrada.' }}</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Email</h6>
-                                <p>{{ $padrinho->email }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Status</h6>
-                                <p>{{ $padrinho->status }}</p>
-                            </div>
-                        </div>
-                        <h6 class="text-muted">Observações</h6>
-                        <p class="fw-medium">{{ $padrinho->observacoes ?? 'Nenhuma observação cadastrada.' }}
-                        </p>
                     </div>
+
 
                     <!-- Informações do Evento -->
                     <div class="tab-pane fade" id="evento" role="tabpanel">
-                        <h5 class="mb-4 fw-bold">Informações do Evento</h5>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Data de Locação</h6>
-                                <p>{{ \Carbon\Carbon::parse($padrinho->datadalocacao)->format('d/m/Y') }}</p>
+                        <h5 class="mb-4 fw-bold d-flex align-items-center">
+                            <i class="bi bi-calendar-event me-2 text-primary"></i> Informações do Evento
+                        </h5>
+
+                        <div class="border rounded-4 p-4 bg-light shadow-sm">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-calendar-check text-success me-2"></i>
+                                        <div>
+                                            <small class="text-muted">Data de Locação</small><br>
+                                            <span
+                                                class="fw-semibold">{{ \Carbon\Carbon::parse($padrinho->datadalocacao)->format('d/m/Y') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-box-arrow-down text-warning me-2"></i>
+                                        <div>
+                                            <small class="text-muted">Data de Retirada</small><br>
+                                            <span
+                                                class="fw-semibold">{{ \Carbon\Carbon::parse($padrinho->datadaretirada)->format('d/m/Y') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Data de Retirada</h6>
-                                <p>{{ \Carbon\Carbon::parse($padrinho->datadaretirada)->format('d/m/Y') }}</p>
-                            </div>
+
+                            <hr class="my-4">
+
+                            <h6 class="text-muted mb-2">Observações</h6>
+                            <p class="fw-medium mb-0">
+                                {{ $padrinho->observacoesevento ?? 'Nenhuma observação cadastrada.' }}
+                            </p>
                         </div>
-                        <h6 class="text-muted">Observações</h6>
-                        <p class="fw-medium">{{ $padrinho->observacoesevento ?? 'Nenhuma observação cadastrada.' }}
-                        </p>
                     </div>
+
 
                     <!-- Medidas -->
                     <div class="tab-pane fade" id="medidas" role="tabpanel">
-                        <h5 class="mb-4 fw-bold">Medidas do Padrinho</h5>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Paletó</h6>
-                                <p>{{ $padrinho->paleto ?? 'Não especificado' }}</p>
+                        <h5 class="mb-4 fw-bold">Medidas do Terno</h5>
+                        <div class="border rounded-4 p-4 bg-light">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="mb-3">
+                                        <small class="text-muted">Cor do Terno</small>
+                                        <div class="fw-semibold">{{ $padrinho->cor_terno ?? '-' }}</div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="mb-3">
+                                        <small class="text-muted">Paletó</small>
+                                        <div class="fw-semibold">{{ $padrinho->paleto ?? '-' }}</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="text-muted">Calça</small>
+                                        <div class="fw-semibold">{{ $padrinho->calca ?? '-' }}</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="text-muted">Camisa</small>
+                                        <div class="fw-semibold">{{ $padrinho->camisa ?? '-' }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="mb-3">
+                                        <small class="text-muted">Modelo do Terno</small>
+                                        <div class="fw-semibold">{{ $padrinho->modelo_terno ?? '-' }}</div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="mb-3">
+                                        <small class="text-muted">Colete</small>
+                                        <div class="fw-semibold">{{ $padrinho->colete ?? '-' }}</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="text-muted">Manga</small>
+                                        <div class="fw-semibold">{{ $padrinho->manga ?? '-' }}</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="text-muted">Barra da Calça</small>
+                                        <div class="fw-semibold">{{ $padrinho->barra_calca ?? '-' }}</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Calça</h6>
-                                <p>{{ $padrinho->calca ?? 'Não especificado' }}</p>
-                            </div>
+                            <h6 class="text-muted">Observações</h6>
+                            <p class="fw-medium">{{ $padrinho->observacoesmedidas ?? 'Nenhuma observação cadastrada.' }}
+                            </p>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Camisa</h6>
-                                <p>{{ $padrinho->camisa ?? 'Não especificado' }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Colete</h6>
-                                <p>{{ $padrinho->colete ?? 'Não especificado' }}</p>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Manga</h6>
-                                <p>{{ $padrinho->manga ?? 'Não especificado' }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Barra da Calça</h6>
-                                <p>{{ $padrinho->barra_calca ?? 'Não especificado' }}</p>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Modelo</h6>
-                                <p>{{ $padrinho->modelo_terno ?? 'Não especificado' }}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-1">Cor</h6>
-                                <p>{{ $padrinho->cor_terno ?? 'Não especificado' }}</p>
-                            </div>
-                        </div>
-                        <h6 class="text-muted">Observações</h6>
-                        <p class="fw-medium">{{ $padrinho->observacoes_medidas ?? 'Nenhuma observação cadastrada.' }}
-                        </p>
                     </div>
                 </div>
             </div>

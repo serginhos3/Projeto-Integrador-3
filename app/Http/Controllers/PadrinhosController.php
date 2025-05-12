@@ -118,8 +118,8 @@ class PadrinhosController extends Controller
             'colete' => $request->colete,
             'manga' => $request->manga,
             'barra_calca' => $request->barra_calca,
-            'modelo_terno' => $request->modelo,
-            'cor_terno' => $request->cor,
+            'modelo_terno' => $request->modelo_terno,
+            'cor_terno' => $request->cor_terno,
             'observacoes_medidas' => $request->observacoes_medidas,
         ]);
 

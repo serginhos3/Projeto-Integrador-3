@@ -39,7 +39,7 @@ class NoivosController extends Controller
             'endereco' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:50',
             'observacoesnoivo' => 'nullable|string',
-    
+
             'datadoevento' => 'nullable|date',
             'localevento' => 'nullable|string|max:255',
             'enderecoevento' => 'nullable|string|max:255',
@@ -47,7 +47,7 @@ class NoivosController extends Controller
             'datadasegundaprova' => 'nullable|date',
             'datadaretirada' => 'nullable|date',
             'observacoesevento' => 'nullable|string',
-    
+
             'paleto' => 'nullable|string',
             'calca' => 'nullable|string',
             'camisa' => 'nullable|string',
@@ -82,7 +82,7 @@ class NoivosController extends Controller
             'endereco' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:50',
             'observacoesnoivo' => 'nullable|string',
-    
+
             'datadoevento' => 'nullable|date',
             'localevento' => 'nullable|string|max:255',
             'enderecoevento' => 'nullable|string|max:255',
@@ -90,7 +90,7 @@ class NoivosController extends Controller
             'datadasegundaprova' => 'nullable|date',
             'datadaretirada' => 'nullable|date',
             'observacoesevento' => 'nullable|string',
-    
+
             'paleto' => 'nullable|string',
             'calca' => 'nullable|string',
             'camisa' => 'nullable|string',
@@ -113,6 +113,18 @@ class NoivosController extends Controller
 
         return redirect()->route('noivos.list')->with('success', 'Noivo atualizado com sucesso!');
     }
+
+    public function alterarStatus(Request $request, $noivo, $status)
+    {
+        $noivo = Noivo::findOrFail($noivo);
+
+        // Atualiza o status
+        $noivo->status = $status;
+        $noivo->save();
+
+        return redirect()->back()->with('status', 'Status atualizado com sucesso!');
+    }
+
 
     public function destroy($id)
     {
