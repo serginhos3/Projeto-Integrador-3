@@ -10,7 +10,7 @@ use Illuminate\View\View;
 
 class PedidosController extends Controller
 {
-    // Listagem de pedidos
+    
     public function list()
     {
         $pedidos = Pedido::with('noivo', 'padrinhos')
@@ -20,7 +20,7 @@ class PedidosController extends Controller
         return view('pedidos.list', compact('pedidos'));
     }
 
-    // Tela de criação de novo pedido
+    
     public function criar(): View
     {
         $noivos = Noivo::all();
@@ -29,7 +29,7 @@ class PedidosController extends Controller
         return view('pedidos.criar', compact('noivos', 'padrinhos'));
     }
 
-    // Exibir detalhes de um pedido
+   
     public function show($id)
     {
         $pedido = Pedido::findOrFail($id);
@@ -38,7 +38,7 @@ class PedidosController extends Controller
 
     public function store(Request $request)
     {
-        // Monta os Itens
+       
         $itens = [];
         $valor_total_itens = 0;
 
@@ -51,12 +51,12 @@ class PedidosController extends Controller
                         'descricao' => $descricao,
                         'valor' => $valor,
                     ];
-                    $valor_total_itens += $valor; // Soma cada valor
+                    $valor_total_itens += $valor;
                 }
             }
         }
 
-        // Monta os Pagamentos
+       
         $pagamentos = [];
         if ($request->has('data_pagamento') && $request->has('valor_pagamento') && $request->has('metodo_pagamento')) {
             foreach ($request->data_pagamento as $index => $data) {
@@ -73,18 +73,19 @@ class PedidosController extends Controller
             }
         }
 
-        // Extrai arrays para salvar no banco
+       
         $data_pagamentos = array_column($pagamentos, 'data_pagamento');
         $metodo_pagamentos = array_column($pagamentos, 'metodo_pagamento');
+        $valor_pagamentos = array_column($pagamentos, 'valor_pago');
 
-        // Atualiza o request para validação
+       
         $request->merge([
             'itens' => $itens,
             'pagamentos' => $pagamentos,
             'valor_total_itens' => $valor_total_itens,
         ]);
 
-        // Validação dos dados
+        
         $validatedData = $request->validate([
             'idnoivo' => 'required|exists:noivos,id',
             'descricao' => 'required|array',
@@ -103,11 +104,11 @@ class PedidosController extends Controller
             'observacoes' => 'nullable|string',
         ]);
 
-        // Junta descrições e valores
+       
         $descricao_itens = implode(', ', $request->descricao);
         $valor_itens = implode(',', $request->valor);
 
-        // Cria o pedido
+      
         $pedido = Pedido::create([
             'noivo_id' => $validatedData['idnoivo'],
             'descricao_itens' => $descricao_itens,
@@ -122,11 +123,12 @@ class PedidosController extends Controller
             'datadoevento' => $validatedData['datadoevento'],
             'status_pagamento' => $validatedData['status_pagamento'] ?? null,
             'observacoes' => $validatedData['observacoes'] ?? null,
-            'data_pagamento' => '2025-05-15,2025-05-20',
-            'metodo_pagamento' => 'Pix,Cartão de Débito',
+            'data_pagamento' => implode('|', $data_pagamentos),
+            'valor_pagamentos' => implode('|', $valor_pagamentos),
+            'metodo_pagamento' => implode('|', $metodo_pagamentos),
         ]);
 
-        // Se tiver padrinhos vinculados
+     
         if ($request->has('padrinhos')) {
             $pedido->padrinhos()->attach($request->padrinhos);
         }
@@ -135,7 +137,7 @@ class PedidosController extends Controller
     }
 
 
-    // Tela de edição de pedido
+    
     public function editar($id): View
     {
         $pedido = Pedido::with('padrinhos')->findOrFail($id);
@@ -147,13 +149,13 @@ class PedidosController extends Controller
 
 
 
-    // Atualizar pedido
+   
     public function atualizar(Request $request, $id)
     {
 
         $pedido = Pedido::findOrFail($id);
 
-        // Recalcular valores dos itens
+        
         $valor_total_itens = 0;
         $descricao_itens = [];
         $valor_itens = [];
@@ -169,7 +171,7 @@ class PedidosController extends Controller
             }
         }
 
-        // Recalcular pagamentos
+      
         $valor_total_pago = 0;
         $data_pagamentos = [];
         $valor_pagamentos = [];
@@ -223,14 +225,14 @@ class PedidosController extends Controller
             'observacoes' => $validatedData['observacoes'] ?? null,
         ]);
 
-        // Atualiza padrinhos vinculados
+      
         $pedido->padrinhos()->sync($request->padrinhos ?? []);
 
         return redirect()->route('pedidos.list')->with('status', 'Pedido atualizado com sucesso!');
     }
 
 
-    // Deletar pedido
+   
     public function destroy($id)
     {
         $pedido = Pedido::findOrFail($id);
@@ -239,7 +241,7 @@ class PedidosController extends Controller
         return redirect()->route('pedidos.list')->with('status', 'Pedido excluído com sucesso!');
     }
 
-    // Buscar informações do noivo
+   
     public function obterInformacoesNoivo($id)
     {
         $noivo = Noivo::find($id);

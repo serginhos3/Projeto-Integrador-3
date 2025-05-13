@@ -32,7 +32,7 @@
             @method('PUT')
 
             <div id="tab-content">
-                {{-- Informações Pessoais --}}
+
                 <div id="tab-pessoal" class="tab-pane">
                     <h2 class="text-xl font-bold mb-1">Informações Pessoais</h2>
                     <p class="text-sm text-gray-500 mb-6">Preencha os dados pessoais do padrinho.</p>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                {{-- Informações do Evento --}}
+
                 <div id="tab-evento" class="tab-pane hidden">
                     <h2 class="text-xl font-semibold mb-1">Informações do Evento</h2>
                     <p class="text-sm text-gray-500 mb-4">Preencha os dados do evento do padrinho.</p>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                {{-- Medidas do Terno --}}
+
                 <div id="tab-medidas" class="tab-pane hidden">
                     <h2 class="text-xl font-bold mb-1">Medidas do Terno</h2>
                     <p class="text-sm text-gray-500 mb-6">Informe as medidas para o traje do padrinho.</p>
@@ -157,7 +157,7 @@
         </form>
     </div>
 
-    {{-- Scripts iguais ao cadastro --}}
+
     <script>
         const tabs = document.querySelectorAll('#tabs a');
         const panes = document.querySelectorAll('.tab-pane');

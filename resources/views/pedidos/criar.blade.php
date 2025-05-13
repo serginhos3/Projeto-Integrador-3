@@ -29,7 +29,9 @@
         <form action="{{ route('pedidos.store') }}" method="POST">
             @csrf
             <div id="tab-content">
+                
                 <!-- Informações Gerais -->
+
                 <div id="tab-pessoal" class="tab-pane hidden">
                     <h2 class="text-xl font-bold mb-1">Informações Gerais</h2>
                     <p class="text-sm text-gray-500 mb-6">Edite as informações gerais do pedido.</p>
@@ -120,7 +122,7 @@
                     </div>
                 </div>
 
-                <!-- Aba de Padrinhos -->
+                <!-- Aba -->
                 <div id="tab-padrinhos" class="tab-pane hidden">
                     <h2 class="text-xl font-bold mb-1">Padrinhos Vinculados</h2>
                     <p class="text-sm text-gray-500 mb-6">Selecione os padrinhos que fazem parte deste pedido.</p>
@@ -153,10 +155,11 @@
                     </div>
                 </div>
 
-                <!-- Aba de Itens do Pedido -->
+                <!-- Aba -->
                 <div id="tab-itens" class="tab-pane hidden">
                     <h2 class="text-xl font-bold mb-1">Itens do Pedido</h2>
-                    <p class="text-sm text-gray-500 mb-6">Adicione ou edite os itens do pedido.</p>
+                    <p class="text-sm text-gray-500 mb-6">Adicione ou edite os itens do pedido.<br>
+                        <br>Exemplo: Aluguel de terno completo.</p>
 
                     <div id="itensContainer">
                         <div class="item mb-3 d-flex align-items-center">
@@ -186,7 +189,7 @@
                     </div>
                 </div>
 
-                <!-- Aba de Pagamentos -->
+                <!-- Aba -->
                 <div id="tab-pagamento" class="tab-pane hidden">
                     <h2 class="text-xl font-bold mb-1">Pagamentos</h2>
                     <p class="text-sm text-gray-500 mb-6">Gerencie os pagamentos do pedido.</p>
@@ -308,13 +311,13 @@
                             }
                         });
 
-                        // Atualiza o valor total na aba Itens
+                     
                         document.getElementById('valorTotalItens').textContent = 'R$ ' + total.toLocaleString('pt-BR', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
                         });
 
-                        // Atualiza o valor total na aba Pagamento também!
+                       
                         document.getElementById('valorTotalPagamento').textContent = 'R$ ' + total.toLocaleString('pt-BR', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
@@ -364,7 +367,7 @@
                         updateTotal();
                     });
 
-                    updateTotal(); // Inicializa
+                    updateTotal();
                     updatePaymentValues();
                 </script>
             </div>
@@ -378,7 +381,7 @@
             const panes = document.querySelectorAll('.tab-pane');
             const form = document.querySelector('form');
 
-            // Função para trocar abas
+            
             tabs.forEach(tab => {
                 tab.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -391,10 +394,10 @@
                 });
             });
 
-            // Inicializa a primeira aba
+            
             document.querySelector('#tabs a').click();
 
-            // Atualizar contagem de padrinhos selecionados
+            
             function updateSelectedCount() {
                 const selectedCount = document.querySelectorAll('input[name="padrinhos[]"]:checked').length;
                 document.getElementById('selectedPadrinhos').textContent =
@@ -409,7 +412,7 @@
                 updateSelectedCount();
             });
 
-            // Adicionar item
+          
             window.addItem = function() {
                 const newItem = document.createElement('div');
                 newItem.classList.add('item', 'mb-3', 'd-flex', 'align-items-center');
@@ -427,7 +430,7 @@
                 updateTotal();
             }
 
-            // Adicionar pagamento
+           
             window.addPayment = function() {
                 const newPayment = document.createElement('div');
                 newPayment.classList.add('payment-item', 'mb-3', 'd-flex', 'align-items-center');
@@ -449,7 +452,7 @@
                 updatePaymentValues();
             }
 
-            // Atualizar valor total de Itens
+           
             function updateTotal() {
                 let totalItens = 0;
                 document.querySelectorAll('input[name="valor[]"]').forEach(input => {
@@ -466,7 +469,7 @@
                 updatePaymentValues();
             }
 
-            // Atualizar pagamentos
+         
             function updatePaymentValues() {
                 let totalPago = 0;
                 document.querySelectorAll('input[name="valor_pagamento[]"]').forEach(input => {
@@ -488,19 +491,19 @@
                 document.getElementById('valor_restante').value = restante.toFixed(2);
             }
 
-            // Atualizar valores sempre que algo mudar
+           
             document.addEventListener('input', function(e) {
                 if (e.target.matches('input[name="valor[]"], input[name="valor_pagamento[]"]')) {
                     updateTotal();
                 }
             });
 
-            // Antes de enviar o formulário, força atualizar valores
+           
             form.addEventListener('submit', function(e) {
                 updateTotal();
             });
 
-            updateTotal(); // Inicializa
+            updateTotal();
         });
     </script>
 

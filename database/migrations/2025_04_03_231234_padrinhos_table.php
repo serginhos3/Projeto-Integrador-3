@@ -13,20 +13,20 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('noivo_id');
 
-            // Informações pessoais
+          
             $table->string('nome');
             $table->string('telefone')->nullable();
             $table->string('email')->unique();
             $table->string('status')->nullable();
             $table->text('observacoes')->nullable();
 
-            // Informações do evento
+            
             $table->date('datadoevento')->nullable();
             $table->date('datadalocacao')->nullable();
             $table->date('datadaretirada')->nullable();
             $table->text('observacoesevento')->nullable();
 
-            // Medidas do terno
+            
             $table->string('paleto')->nullable();
             $table->string('calca')->nullable();
             $table->string('camisa')->nullable();
@@ -39,19 +39,19 @@ return new class extends Migration
 
             $table->timestamps();
 
-            // Chave estrangeira
+     
             $table->foreign('noivo_id')->references('id')->on('noivos')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        // Primeiro remove a foreign key
+   
         Schema::table('padrinhos', function (Blueprint $table) {
             $table->dropForeign(['noivo_id']);
         });
 
-        // Depois remove a tabela inteira
+       
         Schema::dropIfExists('padrinhos');
     }
 };

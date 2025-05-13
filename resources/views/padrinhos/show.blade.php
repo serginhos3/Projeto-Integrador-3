@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="container py-4">
         <div class="row">
-            <!-- Botão de Voltar, Título e Botão de Editar -->
+            
             <div class="col-12 mb-4">
                 <div class="d-flex justify-content-start align-items-center">
-                    <!-- Botão Voltar -->
+                    
                     <a href="{{ route('padrinhos.list') }}"
                         class="mr-4 text-gray-500 hover:text-black transition-colors duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -12,10 +12,10 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                     </a>
-                    <!-- Título -->
+                    
                     <h1 class="mb-0 ms-3" style="font-size: 1.5rem; font-weight: bold;">Detalhes do Padrinho</h1>
 
-                    <!-- Botão Editar Estilizado -->
+                    
                     <a href="{{ route('padrinhos.editar', $padrinho->id) }}"
                         class="btn btn-outline-dark d-flex align-items-center ms-auto">
                         <i class="bi bi-pencil" style="font-size: 1.25rem;"></i>
@@ -24,12 +24,12 @@
                 </div>
             </div>
 
-            <!-- CARD LATERAL -->
+           
             <div class="col-md-4 mb-4">
                 <div class="card shadow border-0 rounded-4">
                     <div class="card-body text-center p-4">
                         <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center shadow"
-                            style="width: 80px; height: 80px; background: linear-gradient(135deg, #6b73ff, #000dff); color: white; font-size: 24px; font-weight: bold;">
+                            style="width: 80px; height: 80px; background: linear-gradient(135deg, #1b1d3e, #00ccff); color: white; font-size: 24px; font-weight: bold;">
                             {{ strtoupper(substr($padrinho->nome, 0, 2)) }}
                         </div>
 
@@ -53,8 +53,14 @@
                                 </span>
                                 <small class="d-block text-muted mt-1">Status</small>
                             </div>
-                        </div>
 
+                            <div>
+                                <span class="badge bg-primary text-white px-3 py-2 rounded-pill shadow-sm">
+                                    {{ $padrinho->noivo->nome ?? 'Sem Noivo' }}
+                                </span>
+                                <small class="d-block text-muted mt-1">Noivo</small>
+                            </div>
+                        </div>
                         <a href="{{ route('padrinhos.editar', $padrinho->id) }}"
                             class="btn btn-dark w-100 shadow-sm rounded-pill fw-semibold">
                             Editar Padrinho
@@ -64,9 +70,9 @@
             </div>
 
 
-            <!-- CONTEÚDO DAS ABAS -->
+
             <div class="col-md-8">
-                <!-- ABAS -->
+                <!-- Abas -->
                 <ul class="nav nav-tabs mb-3 border-0" id="tabsPadrinho" role="tablist">
                     <li class="nav-item me-2" role="presentation">
                         <button class="nav-link active d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
@@ -95,9 +101,9 @@
                 </ul>
 
 
-                <!-- CONTEÚDO DAS ABAS -->
+
                 <div class="tab-content bg-white p-4 shadow-sm border rounded-4" id="tabContentPadrinho">
-                    <!-- Informações Pessoais -->
+
                     <div class="tab-pane fade show active" id="informacoes" role="tabpanel">
                         <h5 class="mb-4 fw-bold d-flex align-items-center gap-2">
                             <i class="bi bi-person-circle text-primary"></i> Informações Pessoais
@@ -145,7 +151,7 @@
                     </div>
 
 
-                    <!-- Informações do Evento -->
+
                     <div class="tab-pane fade" id="evento" role="tabpanel">
                         <h5 class="mb-4 fw-bold d-flex align-items-center">
                             <i class="bi bi-calendar-event me-2 text-primary"></i> Informações do Evento
@@ -186,7 +192,7 @@
                     </div>
 
 
-                    <!-- Medidas -->
+
                     <div class="tab-pane fade" id="medidas" role="tabpanel">
                         <h5 class="mb-4 fw-bold">Medidas do Terno</h5>
                         <div class="border rounded-4 p-4 bg-light">
@@ -231,7 +237,8 @@
                                 </div>
                             </div>
                             <h6 class="text-muted">Observações</h6>
-                            <p class="fw-medium">{{ $padrinho->observacoesmedidas ?? 'Nenhuma observação cadastrada.' }}
+                            <p class="fw-medium">
+                                {{ $padrinho->observacoes_medidas ?? 'Nenhuma observação cadastrada.' }}
                             </p>
                         </div>
                     </div>

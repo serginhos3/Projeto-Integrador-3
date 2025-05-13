@@ -254,14 +254,14 @@
             input.addEventListener('keypress', function(e) {
                 const char = String.fromCharCode(e.which);
 
-                // Aceita apenas número, ponto ou vírgula
+               
                 if (!/[0-9.,]/.test(char)) {
                     e.preventDefault();
                 }
             });
 
             input.addEventListener('input', function() {
-                // Remove tudo que não for número, ponto ou vírgula
+            
                 this.value = this.value.replace(/[^0-9.,]/g, '');
             });
         });

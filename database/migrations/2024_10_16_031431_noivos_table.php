@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('datadaretirada')->nullable();
             $table->string('observacoesevento', 255)->nullable();
 
-            // Novos campos de medidas do terno
+
             $table->string('paleto', 50)->nullable();
             $table->string('calca', 50)->nullable();
             $table->string('camisa', 50)->nullable();

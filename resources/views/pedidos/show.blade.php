@@ -1,8 +1,9 @@
 <x-app-layout>
     <div class="container py-6 mx-auto">
 
-        <!-- Cabeçalho -->
-        <div class="mb-6 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+
+        <div
+            class="mb-6 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
             <div>
                 <a href="{{ route('pedidos.list') }}"
                     class="mr-4 text-gray-500 hover:text-black transition-colors duration-200">
@@ -19,7 +20,7 @@
             </div>
         </div>
 
-        <!-- Status + Valor -->
+
         <div class="bg-white p-4 rounded-lg flex items-center justify-between shadow mb-6">
             <div class="flex items-center space-x-2">
                 <span class="px-3 py-1 text-sm font-semibold text-white bg-blue-500 rounded-full">
@@ -35,9 +36,9 @@
             </div>
         </div>
 
-        <!-- Blocos principais -->
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <!-- Informações do Cliente -->
+
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
                     <i class="fas fa-user"></i> Informações do Cliente
@@ -61,7 +62,7 @@
                 </a>
             </div>
 
-            <!-- Datas Importantes -->
+
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
                     <i class="fas fa-calendar-alt"></i> Datas Importantes
@@ -88,11 +89,31 @@
                 </div>
             </div>
 
-            <!-- Informações de Pagamento -->
+
+            @php
+                $metodos = explode('|', $pedido->metodo_pagamento ?? '');
+                $valores = explode('|', $pedido->valor_pagamentos ?? '');
+
+                $metodosAgrupados = [];
+
+                foreach ($metodos as $index => $metodo) {
+                    $metodo = trim($metodo);
+                    $valor = isset($valores[$index]) ? (float) $valores[$index] : 0;
+
+                    if (!empty($metodo)) {
+                        if (!isset($metodosAgrupados[$metodo])) {
+                            $metodosAgrupados[$metodo] = 0;
+                        }
+                        $metodosAgrupados[$metodo] += $valor;
+                    }
+                }
+            @endphp
+
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
                     <i class="fas fa-dollar-sign"></i> Informações de Pagamento
                 </h2>
+
                 <div class="mb-3">
                     <p class="text-sm text-gray-500">Valor Total</p>
                     <p class="text-base font-semibold">R$ {{ number_format($pedido->valor_total_itens, 2, ',', '.') }}
@@ -107,13 +128,24 @@
                     <p class="text-sm text-gray-500">Valor Restante</p>
                     <p class="text-base font-semibold">R$ {{ number_format($pedido->valor_restante, 2, ',', '.') }}</p>
                 </div>
+
+                @if (count($metodosAgrupados))
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-500">Métodos de Pagamento Utilizados</p>
+                        <ul class="text-base font-semibold list-disc list-inside text-gray-800">
+                            @foreach ($metodosAgrupados as $metodo => $total)
+                                <li>{{ $metodo }}: R$ {{ number_format($total, 2, ',', '.') }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
+
         </div>
 
-        <!-- Itens + Padrinhos + Observações + Próximos Passos -->
+
         <div class="row mt-6 g-4">
 
-            <!-- Itens do Pedido -->
             <div class="col-12">
                 <div class="p-4 bg-white rounded-lg shadow-sm">
                     <h4 class="text-lg font-semibold mb-4 flex items-center gap-2"> Itens do Pedido</h4>
@@ -141,7 +173,7 @@
                 </div>
             </div>
 
-            <!-- Padrinhos Vinculados -->
+
             <div class="col-12">
                 <div class="p-4 bg-white rounded-lg shadow-sm">
                     <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
@@ -189,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- Observações -->
+
             <div class="col-12">
                 <div class="p-4 bg-white rounded-lg shadow-sm">
                     <h5 class="font-bold mb-3">Observações</h5>
@@ -197,7 +229,7 @@
                 </div>
             </div>
 
-            <!-- Próximos Passos -->
+
             <div class="col-12">
                 <div class="p-4 bg-white rounded-lg shadow-sm">
                     <h4 class="text-xl font-bold mb-4 flex items-center gap-2">

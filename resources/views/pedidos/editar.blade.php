@@ -115,7 +115,7 @@
                             </select>
                         </div>
                     </div>
-
+                    
                     <div class="mt-4">
                         <label for="observacoes" class="block text-sm font-medium text-gray-700">Observações</label>
                         <textarea id="observacoes" name="observacoes" class="mt-1 w-full rounded-md border-gray-300 shadow-sm" rows="4"
@@ -211,9 +211,8 @@
 
                     @php
                         $datasPagamentos = explode('|', $pedido->data_pagamento ?? '');
-                        $valoresPagamentos = explode('|', $pedido->valor_itens ?? '');
-                        $metodosPagamentos = explode('|', $pedido->metodo_pagamento ?? '');
                         $valoresPagamentos = explode('|', $pedido->valor_pagamentos ?? '');
+                        $metodosPagamentos = explode('|', $pedido->metodo_pagamento ?? '');
                     @endphp
 
                     <div id="pagamentosContainer">
@@ -327,7 +326,7 @@
                 inputTotalHidden.value = total.toFixed(2);
             }
 
-            // ⬇️ Chamada adicional que sincroniza com a aba de pagamentos
+           
             atualizarPagamentos();
         }
 
@@ -359,12 +358,12 @@
                 currency: 'BRL'
             });
 
-            // Atualiza também os inputs hidden
+
             document.getElementById('valor_total_pago').value = totalPago.toFixed(2);
             document.getElementById('valor_restante').value = restante.toFixed(2);
         }
 
-        // Atualizar quando o usuário digitar
+
         document.addEventListener('input', function(e) {
             if (e.target.matches('input[name="valor_pagamento[]"]')) {
                 atualizarPagamentos();
@@ -373,14 +372,14 @@
 
         document.addEventListener('DOMContentLoaded', atualizarPagamentos);
 
-        // Sempre que um campo de valor for alterado
+
         document.addEventListener('input', function(e) {
             if (e.target.matches('input[name="valor[]"]')) {
                 atualizarTotalItens();
             }
         });
 
-        // Atualiza ao carregar a página também
+
         document.addEventListener('DOMContentLoaded', atualizarTotalItens);
 
         function addPayment() {
@@ -412,7 +411,7 @@
             const totalPago = document.getElementById('valor_total_pago')?.value || 0;
             const restante = document.getElementById('valor_restante')?.value || 0;
 
-            // Atualiza os valores nos <span>
+
             document.getElementById('valorTotalItens').textContent = formatar(totalItens);
             document.getElementById('valorTotalPagamento').textContent = formatar(totalItens);
             document.getElementById('valorPago').textContent = formatar(totalPago);

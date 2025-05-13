@@ -13,16 +13,16 @@ return new class extends Migration
             $table->foreignId('noivo_id')->constrained('noivos')->onDelete('cascade');
             $table->foreignId('padrinho_id')->nullable()->constrained('noivos')->onDelete('set null');
             
-            $table->text('descricao_itens')->nullable(); // Armazena os itens em formato de texto
-            $table->text('valor_itens')->nullable(); // <- ADICIONE ESSA LINHA
-            $table->decimal('valor_total_itens', 10, 2)->default(0); // Total dos itens
-            $table->decimal('valor_total_pago', 10, 2)->default(0); // Quanto foi pago
-            $table->decimal('valor_restante', 10, 2)->default(0); // Valor restante a pagar
+            $table->text('descricao_itens')->nullable();
+            $table->text('valor_itens')->nullable();
+            $table->decimal('valor_total_itens', 10, 2)->default(0);
+            $table->decimal('valor_total_pago', 10, 2)->default(0);
+            $table->decimal('valor_restante', 10, 2)->default(0);
             
             $table->string('status')->default('Ativo');
-            $table->string('status_pagamento')->nullable()->default(null)->change();
-            $table->text('metodo_pagamento')->nullable(); // Tipo de pagamento
-            $table->text('data_pagamento')->nullable(); // Data do pagamento
+            $table->string('status_pagamento')->nullable();
+            $table->text('metodo_pagamento')->nullable();
+            $table->text('data_pagamento')->nullable();
             $table->text('valor_pagamentos')->nullable();
             
             $table->date('datadalocacao')->nullable();

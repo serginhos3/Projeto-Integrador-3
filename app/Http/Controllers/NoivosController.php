@@ -59,7 +59,7 @@ class NoivosController extends Controller
             'observacoesmedidas' => 'nullable|string',
         ]);
 
-        // Salvar o noivo com os dados validados
+   
         Noivo::create($validatedData);
 
         return redirect()->route('noivos.list')->with('success', 'Noivo cadastrado com sucesso!');
@@ -118,7 +118,7 @@ class NoivosController extends Controller
     {
         $noivo = Noivo::findOrFail($noivo);
 
-        // Atualiza o status
+     
         $noivo->status = $status;
         $noivo->save();
 

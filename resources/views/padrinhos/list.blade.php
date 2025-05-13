@@ -42,10 +42,9 @@
                             <td class="py-3 px-4">{{ optional($padrinho->datadaretirada)->format('d/m/Y') }}</td>
                             <td class="py-3 px-4">
                                 @if (strtolower($padrinho->status) === 'ativo')
-                                    <span class="px-2 py-1 text-xs rounded-full bg-gray-200 text-gray-800">Ativo</span>
+                                    <span class="px-2 py-1 text-xs rounded-pill bg-success text-white">Ativo</span>
                                 @else
-                                    <span
-                                        class="px-2 py-1 text-xs rounded-full bg-gray-300 text-gray-700">Inativo</span>
+                                    <span class="px-2 py-1 text-xs rounded-pill bg-secondary text-white">Inativo</span>
                                 @endif
                             </td>
                             <td class="py-3 px-4 text-center">

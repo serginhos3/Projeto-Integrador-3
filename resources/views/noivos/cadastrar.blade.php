@@ -87,7 +87,7 @@
                             <label for="endereco" class="block text-sm font-medium text-gray-700">Endereço</label>
                             <input type="text" name="endereco" id="endereco"
                                 class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-                                placeholder="Endereço completo">
+                                placeholder="Digite o CEP para carregar o endereço">
                         </div>
 
                         <div>
@@ -139,7 +139,7 @@
                                 Evento</label>
                             <input type="text" name="enderecoevento" id="enderecoevento"
                                 class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-                                placeholder="Digite o cep de onde será realizado o evento">
+                                placeholder="Digite o CEP de onde será realizado o evento">
                         </div>
 
                         <div>
@@ -412,14 +412,14 @@
             input.addEventListener('keypress', function(e) {
                 const char = String.fromCharCode(e.which);
 
-                // Aceita apenas número, ponto ou vírgula
+               
                 if (!/[0-9.,]/.test(char)) {
                     e.preventDefault();
                 }
             });
 
             input.addEventListener('input', function() {
-                // Remove tudo que não for número, ponto ou vírgula
+                
                 this.value = this.value.replace(/[^0-9.,]/g, '');
             });
         });

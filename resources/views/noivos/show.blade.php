@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="container py-4">
         <div class="row">
-            <!-- Botão de Voltar, Título e Botão de Editar -->
+           
             <div class="col-12 mb-4">
                 <div class="d-flex justify-content-start align-items-center">
-                    <!-- Botão Voltar -->
+                   
                     <a href="{{ route('noivos.list') }}"
                         class="mr-4 text-gray-500 hover:text-black transition-colors duration-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -12,10 +12,10 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                     </a>
-                    <!-- Título -->
+                    
                     <h1 class="mb-0 ms-3" style="font-size: 1.5rem; font-weight: bold;">Detalhes do Noivo</h1>
 
-                    <!-- Botão Editar Estilizado -->
+                    
                     <a href="{{ route('noivos.editar', $noivo->id) }}"
                         class="btn btn-outline-dark d-flex align-items-center ms-auto">
                         <i class="bi bi-pencil" style="font-size: 1.25rem;"></i>
@@ -24,40 +24,41 @@
                 </div>
             </div>
 
-            <!-- CARD LATERAL MODERNO -->
+            
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm border-0 rounded-4 bg-white">
                     <div class="card-body text-center py-5 px-4">
-                        <!-- Ícone com as iniciais -->
+                        
                         <div class="rounded-circle bg-gradient-to-br from-indigo-500 to-blue-600 text-white fw-bold d-flex align-items-center justify-content-center mx-auto mb-3 shadow"
                             style="width: 70px; height: 70px; font-size: 22px;">
                             {{ strtoupper(substr($noivo->nome, 0, 2)) }}
                         </div>
 
-                        <!-- Nome e contato -->
+                        
                         <h5 class="card-title mb-1">{{ $noivo->nome }}</h5>
                         <p class="text-muted mb-1 small">{{ $noivo->email }}</p>
                         <p class="text-muted mb-3"><i class="bi bi-telephone me-1"></i>{{ $noivo->telefone }}</p>
 
-                        <!-- Estatísticas -->
-                        <div class="d-flex justify-content-around mb-4">
-                            <div>
-                                <h6 class="mb-0 fw-bold">{{ $noivo->padrinhos_ativos ?? 0 }}</h6>
-                                <small class="text-muted">Ativos</small>
-                            </div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">{{ $noivo->padrinhos_inativos ?? 0 }}</h6>
-                                <small class="text-muted">Inativos</small>
+                        
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-around">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">{{ $noivo->padrinhos_ativos ?? 0 }}</h6>
+                                    <small class="text-muted">Padrinhos Ativos</small>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">{{ $noivo->padrinhos_inativos ?? 0 }}</h6>
+                                    <small class="text-muted">Padrinhos Inativos</small>
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Observações -->
+                        
                         <div class="text-start bg-light p-3 rounded mb-3 shadow-sm">
                             <h6 class="text-muted mb-1">Observações</h6>
                             <p class="mb-0 small">{{ $noivo->observacoesnoivo ?? 'Nenhuma observação cadastrada.' }}</p>
                         </div>
 
-                        <!-- Botão -->
+                        
                         <a href="#"
                             class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
                             <i class="bi bi-person-plus-fill"></i>
@@ -68,9 +69,9 @@
             </div>
 
 
-            <!-- CONTEÚDO DAS ABAS -->
+           
             <div class="col-md-8">
-                <!-- ABAS -->
+               
                 <ul class="nav nav-tabs mb-3 border-0" id="tabsNoivo" role="tablist">
                     <li class="nav-item me-2" role="presentation">
                         <button class="nav-link active d-flex align-items-center gap-2 px-4 py-2 rounded-pill shadow-sm"
@@ -106,9 +107,9 @@
                     </li>
                 </ul>
 
-                <!-- CONTEÚDO DAS ABAS -->
+              
                 <div class="tab-content bg-white p-4 shadow-sm border rounded-4" id="tabContentNoivo">
-                    <!-- Evento -->
+                   
                     <div class="tab-pane fade show active" id="evento" role="tabpanel">
                         <h5 class="mb-4 fw-bold d-flex align-items-center gap-2">
                             Detalhes do Evento
@@ -116,7 +117,7 @@
 
                         <div class="border rounded-4 p-4 bg-light shadow-sm">
                             <div class="row mb-4">
-                                <!-- Data do Evento -->
+                               
                                 <div class="col-md-6 mb-3">
                                     <div class="bg-white rounded p-3 shadow-sm h-100">
                                         <h6 class="text-muted mb-2 d-flex align-items-center gap-2">
@@ -129,7 +130,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Local do Evento -->
+                                
                                 <div class="col-md-6 mb-3">
                                     <div class="bg-white rounded p-3 shadow-sm h-100">
                                         <h6 class="text-muted mb-2 d-flex align-items-center gap-2">
@@ -142,7 +143,7 @@
                                 </div>
                             </div>
 
-                            <!-- Observações -->
+                           
                             <div class="mt-3">
                                 <div class="bg-white rounded p-3 shadow-sm">
                                     <h6 class="text-muted mb-2 d-flex align-items-center gap-2">
@@ -158,7 +159,7 @@
                     </div>
 
 
-                    <!-- Medidas -->
+                  
                     <div class="tab-pane fade" id="medidas" role="tabpanel">
                         <h5 class="mb-4 fw-bold">Medidas do Terno</h5>
                         <div class="border rounded-4 p-4 bg-light">
@@ -208,7 +209,7 @@
                         </div>
                     </div>
 
-                    <!-- Padrinhos -->
+                 
                     <div class="tab-pane fade" id="padrinhos" role="tabpanel">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
@@ -269,7 +270,7 @@
                     </div>
 
 
-                    <!-- Pedido -->
+                
                     <div class="tab-pane fade" id="pedido" role="tabpanel">
                         @if ($noivo->pedido)
                             <div class="table-responsive">
@@ -300,7 +301,8 @@
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($noivo->pedido->datadaretirada)->format('d/m/Y') }}
                                             </td>
-                                            <td>R$ {{ number_format($noivo->pedido->valor_total_itens, 2, ',', '.') }}</td>
+                                            <td>R$ {{ number_format($noivo->pedido->valor_total_itens, 2, ',', '.') }}
+                                            </td>
                                             <td>
                                                 <span
                                                     class="badge bg-warning text-white px-3 rounded-pill">Parcial</span>

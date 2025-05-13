@@ -24,10 +24,10 @@ class PadrinhosController extends Controller
 
     public function show($id)
     {
-        // Buscar o padrinho pelo ID
-        $padrinho = Padrinho::findOrFail($id); // Isso busca ou retorna erro 404 se não encontrar
+        
+        $padrinho = Padrinho::findOrFail($id);
 
-        // Passar o padrinho para a view show.blade.php
+        
         return view('padrinhos.show', compact('padrinho'));
     }
 

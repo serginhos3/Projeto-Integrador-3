@@ -10,23 +10,23 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Totais
+
         $totalNoivos = Noivo::count();
         $totalPadrinhos = Padrinho::count();
         $mediaPadrinhosPorNoivo = $totalNoivos > 0 ? round($totalPadrinhos / $totalNoivos, 1) : 0;
 
-        // Eventos
+
         $eventosHoje = Noivo::whereDate('datadoevento', Carbon::today())->count();
         $proximosEventosCount = Noivo::whereBetween('datadoevento', [Carbon::today(), Carbon::today()->addDays(30)])->count();
 
-        // Listar 3 próximos eventos
+
         $proximosEventos = Noivo::withCount('padrinhos')
             ->where('datadoevento', '>', Carbon::now())
             ->orderBy('datadoevento')
             ->take(3)
             ->get();
 
-        // Listar 3 últimos padrinhos cadastrados
+  
         $padrinhosRecentes = Padrinho::with('noivo')
             ->latest()
             ->take(3)

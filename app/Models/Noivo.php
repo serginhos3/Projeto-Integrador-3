@@ -43,19 +43,19 @@ class Noivo extends Model
 
     ];
 
-    // Relacionamento com os Padrinhos
+ 
     public function padrinhos()
     {
         return $this->hasMany(Padrinho::class, 'noivo_id');
     }
 
-    // Relacionamento com o Pedido
+
     public function pedido()
     {
         return $this->hasOne(Pedido::class, 'noivo_id');
     }
 
-    // Relacionamento com o Evento
+   
     public function evento()
     {
         return $this->belongsTo(Evento::class, 'evento_id');
