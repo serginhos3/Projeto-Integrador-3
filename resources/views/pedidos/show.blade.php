@@ -15,20 +15,28 @@
                 <h1 class="text-2xl font-bold">Detalhes do Pedido #{{ $pedido->id }}</h1>
             </div>
             <div>
-                <a href="#" class="btn btn-light mr-2">Imprimir</a>
+                <a href="{{ route('pedidos.pdf', $pedido->id) }}" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Imprimir
+                </a>
                 <a href="{{ route('pedidos.editar', $pedido->id) }}" class="btn btn-dark">Editar</a>
             </div>
         </div>
 
 
         <div class="bg-white p-4 rounded-lg flex items-center justify-between shadow mb-6">
-            <div class="flex items-center space-x-2">
-                <span class="px-3 py-1 text-sm font-semibold text-white bg-blue-500 rounded-full">
-                    Pedido {{ $pedido->status }}
-                </span>
-                <span class="px-3 py-1 text-sm font-semibold text-white bg-green-600 rounded-full">
-                    {{ $pedido->status_pagamento }}
-                </span>
+            <div class="flex flex-col items-start space-y-1">
+                <div class="flex items-center space-x-2">
+                    <span class="px-3 py-1 text-sm font-semibold text-white bg-blue-500 rounded-full">
+                        Pedido {{ $pedido->status }}
+                    </span>
+                    <span class="px-3 py-1 text-sm font-semibold text-white bg-green-600 rounded-full">
+                        {{ $pedido->status_pagamento }}
+                    </span>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">
+                    <span class="mr-4">Status do Pedido</span>
+                    <span>Status do Pagamento</span>
+                </div>
             </div>
 
             <div class="text-2xl font-bold text-gray-800">
