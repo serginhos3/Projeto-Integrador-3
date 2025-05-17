@@ -2,44 +2,98 @@
 
 namespace Tests\Feature;
 
-use App\Models\Padrinho;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\Padrinho;
+use App\Models\Noivo;
+use App\Models\User;
 
 class PadrinhoTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_criar_padrinho(): void
+    /** @test */
+    public function deve_cadastrar_um_padrinho_com_dados_validos()
     {
-        $padrinho = Padrinho::factory()->create();
-        $this->assertDatabaseHas('padrinhos', ['id' => $padrinho->id]);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $dados = [
+            'nome' => 'José Padrinho',
+            'telefone' => '11988887777',
+            'email' => 'josepadrinho@email.com',
+            'status' => 'ativo',
+            'noivo_id' => $noivo->id,
+        ];
+        $response = $this->post(route('padrinhos.store'), $dados);
+        $response->assertRedirect(route('padrinhos.list'));
+        $this->assertDatabaseHas('padrinhos', ['nome' => 'José Padrinho']);
     }
 
-    public function test_editar_padrinho(): void
+    /** @test */
+    public function nao_deve_cadastrar_padrinho_sem_nome()
     {
-        $padrinho = Padrinho::factory()->create();
-        $padrinho->nome = 'Novo Nome';
-        $padrinho->save();
-        $this->assertEquals('Novo Nome', $padrinho->fresh()->nome);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $dados = [
+            'email' => 'semnomepadrinho@email.com',
+            'noivo_id' => $noivo->id,
+        ];
+        $response = $this->post(route('padrinhos.store'), $dados);
+        $response->assertSessionHasErrors('nome');
+        $this->assertDatabaseMissing('padrinhos', ['email' => 'semnomepadrinho@email.com']);
     }
 
-    public function test_excluir_padrinho(): void
+    /** @test */
+    public function deve_atualizar_um_padrinho()
     {
-        $padrinho = Padrinho::factory()->create();
-        $padrinho->delete();
-        $this->assertSoftDeleted($padrinho);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $padrinho = Padrinho::create([
+            'nome' => 'Antônio',
+            'email' => 'antonio@email.com',
+            'noivo_id' => $noivo->id,
+        ]);
+        $response = $this->put(route('padrinhos.atualizar', $padrinho->id), [
+            'nome' => 'Antônio Atualizado',
+            'email' => 'antonio@email.com',
+            'noivo_id' => $noivo->id,
+        ]);
+        $response->assertRedirect(route('padrinhos.list'));
+        $this->assertDatabaseHas('padrinhos', ['nome' => 'Antônio Atualizado']);
     }
 
-    public function test_relacionamento_pedidos(): void
+    /** @test */
+    public function deve_excluir_um_padrinho()
     {
-        $padrinho = Padrinho::factory()->create();
-        $this->assertIsIterable($padrinho->pedidos);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $padrinho = Padrinho::create([
+            'nome' => 'Carlos',
+            'email' => 'carlos@email.com',
+            'noivo_id' => $noivo->id,
+        ]);
+        $response = $this->delete(route('padinhos.destroy', $padrinho->id));
+        $response->assertRedirect(route('padrinhos.list'));
+        $this->assertDatabaseMissing('padrinhos', ['id' => $padrinho->id]);
     }
 
-    public function test_status_do_padrinho(): void
+    /** @test */
+    public function deve_mostrar_detalhes_do_padrinho()
     {
-        $padrinho = Padrinho::factory()->create(['status' => 'ativo']);
-        $this->assertEquals('ativo', $padrinho->status);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $padrinho = Padrinho::create([
+            'nome' => 'Pedro',
+            'email' => 'pedro@email.com',
+            'noivo_id' => $noivo->id,
+        ]);
+        $response = $this->get(route('padrinhos.show', $padrinho->id));
+        $response->assertStatus(200);
+        $response->assertSee($padrinho->nome);
     }
 }

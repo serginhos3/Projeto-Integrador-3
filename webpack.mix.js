@@ -1,8 +1,6 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
-        require('tailwindcss'),
-    ])
-    .version();
+// Compilar o CSS
+mix.css('resources/css/app.css', 'public/css')
+   .sass('resources/sass/app.scss', 'public/css')
+   .version();  // Isso cria um arquivo com versão para evitar cache nos navegadores

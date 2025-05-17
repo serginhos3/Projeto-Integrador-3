@@ -49,7 +49,7 @@
                                 </td>
                                 <td class="py-3 px-4">
                                     <span
-                                        class="px-2 py-1 text-xs font-semibold rounded-full 
+                                        class="px-2 py-1 text-xs font-semibold rounded-full
                                         @if ($pedido->status_pagamento == 'Pago') bg-green-500 text-white
                                         @elseif($pedido->status_pagamento == 'Parcial') bg-yellow-500 text-white
                                         @else bg-gray-400 text-white @endif">
@@ -58,7 +58,7 @@
                                 </td>
                                 <td class="py-3 px-4">
                                     <span
-                                        class="px-2 py-1 text-xs font-semibold rounded-full 
+                                        class="px-2 py-1 text-xs font-semibold rounded-full
                                         @if ($pedido->status == 'Ativo') bg-blue-500 text-white
                                         @elseif($pedido->status == 'Concluído') bg-green-500 text-white
                                         @else bg-red-500 text-white @endif">

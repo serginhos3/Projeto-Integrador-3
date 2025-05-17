@@ -2,49 +2,136 @@
 
 namespace Tests\Feature;
 
-use App\Models\Pedido;
-use App\Models\Noivo;
-use App\Models\Padrinho;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\Pedido;
+use App\Models\Noivo;
+use App\Models\User;
 
 class PedidoTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_criar_pedido(): void
+    /** @test */
+    public function deve_cadastrar_um_pedido_com_dados_validos()
     {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $noivo = Noivo::factory()->create();
-        $pedido = Pedido::factory()->create(['noivo_id' => $noivo->id]);
-        $this->assertDatabaseHas('pedidos', ['id' => $pedido->id]);
+        $dados = [
+            'idnoivo' => $noivo->id,
+            'descricao' => ['Terno', 'Gravata'],
+            'valor' => [300, 200],
+            'valor_total_itens' => 500,
+            'valor_total_pago' => 250,
+            'valor_restante' => 250,
+            'status' => 'aberto',
+            'datadalocacao' => '2025-12-10',
+            'datadasegundaprova' => '2025-12-12',
+            'datadaretirada' => '2025-12-14',
+            'datadoevento' => '2025-12-15',
+        ];
+        $response = $this->post(route('pedidos.store'), $dados);
+        $response->assertRedirect(route('pedidos.list'));
+        $this->assertDatabaseHas('pedidos', ['descricao_itens' => 'Terno, Gravata']);
     }
 
-    public function test_relacionamento_padrinhos(): void
+    /** @test */
+    public function nao_deve_cadastrar_pedido_sem_noivo()
     {
-        $pedido = Pedido::factory()->create();
-        $padrinho = Padrinho::factory()->create();
-        $pedido->padrinhos()->attach($padrinho->id);
-        $this->assertTrue($pedido->padrinhos->contains($padrinho));
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $dados = [
+            'descricao' => ['Terno'],
+            'valor' => [100],
+            'valor_total_itens' => 100,
+            'valor_total_pago' => 0,
+            'valor_restante' => 100,
+            'status' => 'aberto',
+            'datadalocacao' => '2025-12-10',
+            'datadasegundaprova' => '2025-12-12',
+            'datadaretirada' => '2025-12-14',
+            'datadoevento' => '2025-12-15',
+        ];
+        $response = $this->post(route('pedidos.store'), $dados);
+        $response->assertSessionHasErrors('idnoivo');
+        $this->assertDatabaseMissing('pedidos', ['descricao_itens' => 'Terno']);
     }
 
-    public function test_remover_padrinho_do_pedido(): void
+    /** @test */
+    public function deve_atualizar_um_pedido()
     {
-        $pedido = Pedido::factory()->create();
-        $padrinho = Padrinho::factory()->create();
-        $pedido->padrinhos()->attach($padrinho->id);
-        $pedido->padrinhos()->detach($padrinho->id);
-        $this->assertFalse($pedido->padrinhos->contains($padrinho));
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $pedido = Pedido::create([
+            'noivo_id' => $noivo->id,
+            'descricao_itens' => 'Terno',
+            'valor_itens' => '100',
+            'valor_total_itens' => 100,
+            'valor_total_pago' => 0,
+            'valor_restante' => 100,
+            'status' => 'aberto',
+            'datadalocacao' => '2025-12-10',
+            'datadasegundaprova' => '2025-12-12',
+            'datadaretirada' => '2025-12-14',
+            'datadoevento' => '2025-12-15',
+        ]);
+        $response = $this->put(route('pedidos.atualizar', $pedido->id), [
+            'noivo_id' => $noivo->id,
+            'descricao' => ['Terno atualizado'],
+            'valor' => [200],
+            'valor_total_itens' => 200,
+            'valor_total_pago' => 0,
+            'valor_restante' => 200,
+            'status' => 'fechado',
+            'datadalocacao' => '2025-12-10',
+            'datadasegundaprova' => '2025-12-12',
+            'datadaretirada' => '2025-12-14',
+            'datadoevento' => '2025-12-15',
+        ]);
+        $response->assertRedirect(route('pedidos.list'));
+        $this->assertDatabaseHas('pedidos', ['descricao_itens' => 'Terno atualizado']);
     }
 
-    public function test_valor_total_itens(): void
+    /** @test */
+    public function deve_excluir_um_pedido()
     {
-        $pedido = Pedido::factory()->create(['valor_total_itens' => 100.50]);
-        $this->assertEquals(100.50, $pedido->valor_total_itens);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $pedido = Pedido::create([
+            'noivo_id' => $noivo->id,
+            'descricao' => 'Gravata',
+            'valor' => 50,
+            'status' => 'aberto',
+        ]);
+        $response = $this->delete(route('pedidos.destroy', $pedido->id));
+        $response->assertRedirect(route('pedidos.list'));
+        $this->assertDatabaseMissing('pedidos', ['id' => $pedido->id]);
     }
 
-    public function test_status_do_pedido(): void
+    /** @test */
+    public function deve_mostrar_detalhes_do_pedido()
     {
-        $pedido = Pedido::factory()->create(['status' => 'ativo']);
-        $this->assertEquals('ativo', $pedido->status);
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $noivo = Noivo::factory()->create();
+        $pedido = Pedido::create([
+            'noivo_id' => $noivo->id,
+            'descricao_itens' => 'Sapato',
+            'valor_itens' => '80',
+            'valor_total_itens' => 80,
+            'valor_total_pago' => 0,
+            'valor_restante' => 80,
+            'status' => 'aberto',
+            'datadalocacao' => '2025-12-10',
+            'datadasegundaprova' => '2025-12-12',
+            'datadaretirada' => '2025-12-14',
+            'datadoevento' => '2025-12-15',
+        ]);
+        $response = $this->get(route('pedidos.show', $pedido->id));
+        $response->assertStatus(200);
+        $response->assertSee('Sapato');
     }
 }

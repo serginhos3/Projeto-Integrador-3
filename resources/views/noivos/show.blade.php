@@ -59,7 +59,7 @@
                         </div>
 
                         
-                        <a href="{{ route('padrinhos.cadastrar') }}"
+                        <a href="#"
                             class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
                             <i class="bi bi-person-plus-fill"></i>
                             <span>Adicionar Padrinho</span>

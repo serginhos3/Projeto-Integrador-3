@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/padrinhos', [PadrinhosController::class, 'list'])->name('padrinhos.list');    
+    Route::get('/padrinhos', [PadrinhosController::class, 'list'])->name('padrinhos.list');
     Route::get('/padrinhos/adicionar', [PadrinhosController::class, 'cadastrar'])->name('padrinhos.cadastrar');
     Route::get('/padrinhos/{id}/editar', [PadrinhosController::class, 'editar'])->name('padrinhos.editar');
     Route::post('/padrinhos', [PadrinhosController::class, 'store'])->name('padrinhos.store');
@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/noivos/buscar', [PedidosController::class, 'buscarNoivos'])->name('noivos.buscar');
     Route::get('/pedidos/{id}', [PedidosController::class, 'show'])->name('pedidos.show');
     Route::post('/pedidos/{pedido}/status/{status}', [PedidosController::class, 'alterarStatus'])->name('pedidos.status');
+
 
 });
 

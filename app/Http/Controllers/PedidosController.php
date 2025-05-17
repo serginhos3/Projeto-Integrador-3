@@ -284,6 +284,7 @@ class PedidosController extends Controller
         return $pdf->download('pedido_' . $pedido->id . '.pdf');
     }
 
+
     public function alterarStatus($id, $status)
     {
         $pedido = Pedido::findOrFail($id);
@@ -300,4 +301,6 @@ class PedidosController extends Controller
 
         return redirect()->back()->with('success', 'Status do pedido atualizado.');
     }
+
+
 }

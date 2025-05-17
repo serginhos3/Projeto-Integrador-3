@@ -1,0 +1,33 @@
+name: CI/CD Laravel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, sqlite3
+          coverage: none
+
+      - name: Instalar dependências
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Copiar .env de exemplo
+        run: cp .env.example .env
+
+      - name: Gerar chave da aplicação
+        run: php artisan key:generate
+
+      - name: Rodar migrations
+        run: php artisan migrate --env=testing --force
