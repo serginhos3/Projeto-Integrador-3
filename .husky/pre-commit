@@ -11,3 +11,5 @@ fi
 
 echo "\n✅ Todos os testes passaram. Prosseguindo com o commit."
 exit 0
+
+# comment
