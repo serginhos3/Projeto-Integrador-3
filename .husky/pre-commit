@@ -9,6 +9,5 @@ if [ $RESULT -ne 0 ]; then
   exit 1
 fi
 
-# commit
 echo "\n✅ Todos os testes passaram. Prosseguindo com o commit."
 exit 0
