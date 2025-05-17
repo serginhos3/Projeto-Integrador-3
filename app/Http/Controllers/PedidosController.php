@@ -283,4 +283,21 @@ class PedidosController extends Controller
         $pdf = Pdf::loadView('pedidos.pdf', compact('pedido', 'metodosAgrupados'));
         return $pdf->download('pedido_' . $pedido->id . '.pdf');
     }
+
+    public function alterarStatus($id, $status)
+    {
+        $pedido = Pedido::findOrFail($id);
+
+        if ($status === 'concluido') {
+            $pedido->status = 'Concluído';
+        } elseif ($status === 'cancelado') {
+            $pedido->status = 'Cancelado';
+        } else {
+            $pedido->status = ucfirst($status);
+        }
+
+        $pedido->save();
+
+        return redirect()->back()->with('success', 'Status do pedido atualizado.');
+    }
 }

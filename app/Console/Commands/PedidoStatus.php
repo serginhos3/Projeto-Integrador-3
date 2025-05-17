@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PedidoAtrasado;
 use Carbon\Carbon;
 
-class PedidosStatus extends Command
+class PedidoStatus extends Command
 {
     protected $signature = 'pedido:status';
 

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -95,5 +94,15 @@ class ProfileTest extends TestCase
             ->assertRedirect('/profile');
 
         $this->assertNotNull($user->fresh());
+    }
+
+    public function test_usuario_pode_atualizar_perfil(): void
+    {
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user)->put(route('profile.update'), [
+            'name' => 'Novo Nome',
+            'email' => 'novo@email.com',
+        ]);
+        $this->assertDatabaseHas('users', ['name' => 'Novo Nome', 'email' => 'novo@email.com']);
     }
 }

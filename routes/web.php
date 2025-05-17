@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pedidos/{id}/pdf', [PedidosController::class, 'gerarPdf'])->name('pedidos.pdf');
     Route::get('/noivos/buscar', [PedidosController::class, 'buscarNoivos'])->name('noivos.buscar');
     Route::get('/pedidos/{id}', [PedidosController::class, 'show'])->name('pedidos.show');
+    Route::post('/pedidos/{pedido}/status/{status}', [PedidosController::class, 'alterarStatus'])->name('pedidos.status');
 
 });
 

@@ -14,7 +14,7 @@
                     class="form-control ps-5 border-0 border-bottom border-secondary-subtle rounded-0 shadow-none bg-transparent"
                     placeholder="Digite para buscar..." style="font-size: 0.95rem;">
             </div>
-  
+
             <div class="overflow-x-auto">
                 <table id="pedidoTable" class="min-w-full text-sm text-gray-700">
                     <thead class="border-b">
@@ -36,24 +36,30 @@
                                 <td class="py-3 px-4 font-semibold">#{{ $pedido->id }}</td>
                                 <td class="py-3 px-4">{{ $pedido->noivo->nome ?? 'Sem Noivo' }}</td>
                                 <td class="py-3 px-4 text-center">
-                                    <span class="inline-flex items-center justify-center w-6 h-6 border rounded-full text-xs">
+                                    <span
+                                        class="inline-flex items-center justify-center w-6 h-6 border rounded-full text-xs">
                                         {{ $pedido->padrinhos->count() }}
                                     </span>
                                 </td>
-                                <td class="py-3 px-4">{{ \Carbon\Carbon::parse($pedido->datadalocacao)->format('d/m/Y') }}</td>
-                                <td class="py-3 px-4">{{ \Carbon\Carbon::parse($pedido->datadaretirada)->format('d/m/Y') }}</td>
-                                <td class="py-3 px-4">R$ {{ number_format($pedido->valor_total_itens, 2, ',', '.') }}</td>
                                 <td class="py-3 px-4">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                        @if($pedido->status_pagamento == 'Pago') bg-green-500 text-white
+                                    {{ \Carbon\Carbon::parse($pedido->datadalocacao)->format('d/m/Y') }}</td>
+                                <td class="py-3 px-4">
+                                    {{ \Carbon\Carbon::parse($pedido->datadaretirada)->format('d/m/Y') }}</td>
+                                <td class="py-3 px-4">R$ {{ number_format($pedido->valor_total_itens, 2, ',', '.') }}
+                                </td>
+                                <td class="py-3 px-4">
+                                    <span
+                                        class="px-2 py-1 text-xs font-semibold rounded-full 
+                                        @if ($pedido->status_pagamento == 'Pago') bg-green-500 text-white
                                         @elseif($pedido->status_pagamento == 'Parcial') bg-yellow-500 text-white
                                         @else bg-gray-400 text-white @endif">
                                         {{ $pedido->status_pagamento }}
                                     </span>
                                 </td>
                                 <td class="py-3 px-4">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                                        @if($pedido->status == 'Ativo') bg-blue-500 text-white
+                                    <span
+                                        class="px-2 py-1 text-xs font-semibold rounded-full 
+                                        @if ($pedido->status == 'Ativo') bg-blue-500 text-white
                                         @elseif($pedido->status == 'Concluído') bg-green-500 text-white
                                         @else bg-red-500 text-white @endif">
                                         {{ $pedido->status }}
@@ -61,19 +67,44 @@
                                 </td>
                                 <td class="py-3 px-4 text-center">
                                     <div class="relative inline-block text-left">
-                                        <button type="button" class="text-gray-600 hover:text-black" data-bs-toggle="dropdown">
+                                        <button type="button" class="text-gray-600 hover:text-black"
+                                            data-bs-toggle="dropdown">
                                             &#8942;
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end text-sm shadow-sm rounded-md mt-2">
-                                            <li><a class="dropdown-item" href="{{ route('pedidos.show', $pedido->id) }}">Ver detalhes</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('pedidos.editar', $pedido->id) }}">Editar</a></li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item text-success" href="#">Marcar como concluído</a></li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('pedidos.show', $pedido->id) }}">Ver detalhes</a>
+                                            </li>
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('pedidos.editar', $pedido->id) }}">Editar</a></li>
                                             <li>
-                                                <form action="{{ route('pedidos.destroy', $pedido->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja cancelar?')">
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <form
+                                                    action="{{ route('pedidos.status', ['pedido' => $pedido->id, 'status' => 'concluido']) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item text-green-600">Marcar como concluído</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form
+                                                    action="{{ route('pedidos.status', ['pedido' => $pedido->id, 'status' => 'cancelado']) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item text-red-600">Cancelar pedido</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('pedidos.destroy', $pedido->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Tem certeza que deseja excluir este pedido? Esta ação não pode ser desfeita.')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="dropdown-item text-danger">Cancelar pedido</button>
+                                                    <button type="submit" class="dropdown-item text-danger">
+                                                        Excluir pedido
+                                                    </button>
                                                 </form>
                                             </li>
                                         </ul>
@@ -92,12 +123,12 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
             const table = document.getElementById('pedidoTable').getElementsByTagName('tbody')[0];
             const rows = table.getElementsByTagName('tr');
 
-            searchInput.addEventListener('input', function () {
+            searchInput.addEventListener('input', function() {
                 const value = searchInput.value.replace('#', '').trim();
                 for (let i = 0; i < rows.length; i++) {
                     const pedidoId = rows[i].querySelector('td').innerText.replace('#', '').trim();
@@ -107,13 +138,15 @@
 
             document.querySelectorAll('th.sortable').forEach(th => {
                 th.style.cursor = 'pointer';
-                th.addEventListener('click', function () {
+                th.addEventListener('click', function() {
                     const tableEl = th.closest('table');
                     const tbody = tableEl.querySelector('tbody');
                     Array.from(tbody.querySelectorAll('tr'))
                         .sort((a, b) => {
-                            const aText = a.cells[th.cellIndex].innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
-                            const bText = b.cells[th.cellIndex].innerText.replace('R$ ', '').replace('.', '').replace(',', '.');
+                            const aText = a.cells[th.cellIndex].innerText.replace('R$ ', '')
+                                .replace('.', '').replace(',', '.');
+                            const bText = b.cells[th.cellIndex].innerText.replace('R$ ', '')
+                                .replace('.', '').replace(',', '.');
                             return parseFloat(aText) - parseFloat(bText);
                         })
                         .forEach(tr => tbody.appendChild(tr));

@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Roda os testes antes do commit
+php artisan test --testsuite=Feature
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+  echo "\n❌ Os testes falharam. Commit abortado."
+  exit 1
+fi
+
+echo "\n✅ Todos os testes passaram. Prosseguindo com o commit."
+exit 0
